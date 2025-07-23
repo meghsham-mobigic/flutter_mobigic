@@ -8,14 +8,14 @@ class AppColors {
   static const Color white = Colors.white;
 }
 
-class MaterialIcons extends StatefulWidget {
-  const MaterialIcons({super.key});
+class MaterialIconsAppRoot extends StatefulWidget {
+  const MaterialIconsAppRoot({super.key});
 
   @override
-  State<MaterialIcons> createState() => _MaterialIconsState();
+  State<MaterialIconsAppRoot> createState() => _MaterialIconsAppRootState();
 }
 
-class _MaterialIconsState extends State<MaterialIcons> {
+class _MaterialIconsAppRootState extends State<MaterialIconsAppRoot> {
   String selectedIcon = 'Home';
   String selectedColor = 'Colors 1 : Black';
 

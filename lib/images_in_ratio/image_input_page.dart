@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobigic/images_in_ratio/image_preview_page.dart';
-class AspectRatioInputPage extends StatefulWidget {
-  const AspectRatioInputPage({super.key});
+class AspectRatioAppRoot extends StatefulWidget {
+  const AspectRatioAppRoot({super.key});
 
   @override
-  State<AspectRatioInputPage> createState() => _AspectRatioInputPageState();
+  State<AspectRatioAppRoot> createState() => _AspectRatioAppRootState();
 }
 
-class _AspectRatioInputPageState extends State<AspectRatioInputPage> {
+class _AspectRatioAppRootState extends State<AspectRatioAppRoot> {
   String selectedRatio = '9:16';
 
   final Map<String, double> aspectRatioMap = {

@@ -47,28 +47,9 @@ class AppRoutes {
       case dateAndTimeApp:
         return MaterialPageRoute(builder: (_) => const DateAndTimeAppRoot());
       case imageInputRoute:
-        return MaterialPageRoute(builder: (_) => const AspectRatioInputPage());
-      case loginFailedRoute:
-        return MaterialPageRoute(builder: (_) => const FailureScreen());
+        return MaterialPageRoute(builder: (_) => const AspectRatioAppRoot());
       case materialIcons:
-        return MaterialPageRoute(builder: (_) => const MaterialIcons());
-
-
-      // case jobApplicationFormRoute:
-      //   return MaterialPageRoute(
-      //     builder: (_) => const JobApplicationFormScreen(),
-      //   );
-      // case imagePreviewRoute:
-      //   final args = settings.arguments! as Map<String, dynamic>;
-      //   return MaterialPageRoute(
-      //     builder: (_) => ImagePreviewPage(
-      //       aspectRatio: args['aspectRatio'] as double,
-      //       label: args['label'] as String,
-      //     ),
-      //   );
-      // // IMP : use model class for passing data to route
-
-
+        return MaterialPageRoute(builder: (_) => const MaterialIconsAppRoot());
       //if everything fails
       default:
         return MaterialPageRoute(
