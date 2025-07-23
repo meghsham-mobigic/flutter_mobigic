@@ -81,16 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           const AssignmentGroup(
-            title: 'Assignment 4: Theming',
-            tasks: [
-              NavigationTile(
-                title: 'Theme changer button',
-                route: AppRoutes.darkLightCounterAppRoot,
-              ),
-            ],
-          ),
-          const AssignmentGroup(
-            title: 'Assignment 5: Date & Time Operations',
+            title: 'Assignment 4: Date & Time Operations',
             tasks: [
               NavigationTile(
                 title: 'Age Calculator',
@@ -99,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           const AssignmentGroup(
-            title: 'Assignment 6: Image Aspect Ratio Demo',
+            title: 'Assignment 5: Image Aspect Ratio Demo',
             tasks: [
               NavigationTile(
                 title: 'Input Aspect Ratio',
@@ -108,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           const AssignmentGroup(
-            title: 'Assignment 7: Material Icons',
+            title: 'Assignment 6: Material Icons',
             tasks: [
               NavigationTile(
                 title: 'Material Icons Sizing and Colors',

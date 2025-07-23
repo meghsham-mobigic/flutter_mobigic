@@ -13,7 +13,7 @@ List<dynamic> generateVerticalMonthGrid(int firstWeekday, int totalDays) {
   ];
 
   // Array to store the vertical calendar grid (7 rows x 6 columns = 42 cells)
-  List<dynamic> verticalCalendarGrid = List.filled(42, "");
+  List<dynamic> verticalCalendarGrid = List.filled(42, '');
 
   int currentDate = 1; // Pointer to track the current date being inserted
   int remainingEmptyCells =

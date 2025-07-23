@@ -16,4 +16,4 @@ class JobApplicationModel {
     required this.jobRole,
     required this.skills,
   });
-} 
+}
