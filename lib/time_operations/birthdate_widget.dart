@@ -32,22 +32,31 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
     }
   }
 
-  // Calculate Age
-  String _calculateAge(DateTime birthDate) {
+
+
+  String getFormattedAge(DateTime birthDate) {
     final now = DateTime.now();
+    return (birthDate.isAfter(now))
+        ? 'Invalid birth date'
+        : _getAgeDifference(birthDate, now);
+  }
+
+  String _getAgeDifference(DateTime birthDate, DateTime now) {
+    if (birthDate.isAfter(now)) return 'Invalid birth date';
+
     int years = now.year - birthDate.year;
     int months = now.month - birthDate.month;
     int days = now.day - birthDate.day;
 
     if (days < 0) {
-      months -= 1;
       final prevMonth = DateTime(now.year, now.month, 0);
       days += prevMonth.day;
+      months -= 1;
     }
 
     if (months < 0) {
-      years -= 1;
       months += 12;
+      years -= 1;
     }
 
     return '$years year(s), $months month(s), $days day(s)';
@@ -55,13 +64,13 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final ageText = selectedDate != null ? _calculateAge(selectedDate!) : null;
-    final dateFormat = DateFormat('dd-MM-yyyy');
+    final ageText = selectedDate != null
+        ? getFormattedAge(selectedDate!)
+        : null;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // 🔹 Birthdate input card
         Card(
           elevation: 4,
           margin: const EdgeInsets.symmetric(vertical: 8),
@@ -78,33 +87,25 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 10),
-                TextField(
-                  controller: _controller,
-                  keyboardType: TextInputType.datetime,
-                  decoration: InputDecoration(
-                    hintText: 'DD-MM-YYYY',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.calendar_today),
-                      onPressed: () => _pickDate(context),
+                GestureDetector(
+                  onTap: () => _pickDate(context),
+                  child: AbsorbPointer(
+                    // Prevents keyboard interaction
+                    child: TextField(
+                      controller: _controller,
+                      readOnly: true, // Prevents manual typing
+                      decoration: InputDecoration(
+                        hintText: 'DD-MM-YYYY',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.calendar_today),
+                          onPressed: () => _pickDate(context),
+                        ),
+                      ),
                     ),
                   ),
-                  onChanged: (value) {
-                    try {
-                      final parsed = DateFormat(
-                        'dd-MM-yyyy',
-                      ).parseStrict(value);
-                      if (parsed.isBefore(today)) {
-                        setState(() {
-                          selectedDate = parsed;
-                        });
-                      }
-                    } catch (_) {
-                      // Invalid input ignored
-                    }
-                  },
                 ),
                 const SizedBox(height: 12),
                 if (ageText != null)
@@ -148,11 +149,22 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                Text(
-                  '• Current Time: ${DateTime.now().millisecondsSinceEpoch}',
+                Center(
+                  child: Text(
+                    'Current Date in Milliseconds since Epoch :\n ${DateTime.now().millisecondsSinceEpoch}',
+                    style: const TextStyle(fontSize: 16, color: AppColors.blue),
+                  ),
                 ),
                 if (selectedDate != null)
-                  Text('• Birthdate: ${selectedDate!.millisecondsSinceEpoch}'),
+                  Center(
+                    child: Text(
+                      'Selected Date in Milliseconds since Epoch:\n ${selectedDate!.millisecondsSinceEpoch}',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: AppColors.blue,
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),

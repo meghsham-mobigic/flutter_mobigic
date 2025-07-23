@@ -4,9 +4,8 @@ import 'package:flutter_mobigic/home_screen/home_screen.dart';
 import 'package:flutter_mobigic/icons/material_icons.dart';
 import 'package:flutter_mobigic/images_in_ratio/image_input_page.dart';
 import 'package:flutter_mobigic/jobs/jobs_login.dart';
-import 'package:flutter_mobigic/jobs/jobs_login_failure.dart';
 import 'package:flutter_mobigic/jobs/jobs_register_screen.dart';
-import 'package:flutter_mobigic/splash/splash_screen.dart';
+import 'package:flutter_mobigic/splash_screen/splash_screen.dart';
 import 'package:flutter_mobigic/themes_and_counter/themes_and_counter_home.dart';
 import 'package:flutter_mobigic/time_operations/date_and_time_app_root.dart';
 
