@@ -1,0 +1,10 @@
+{
+    "title": "Title",
+    "@title": {
+        "description": "A sample title for the application."
+    },
+    "quote": "The only way to do great work is to love what you do.",
+    "@quote": {
+        "description": "A motivational quote by Steve Jobs."
+    }
+}

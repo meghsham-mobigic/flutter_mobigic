@@ -1,14 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_mobigic/l10n/app_localizations.dart';
+import 'package:flutter_mobigic/l10n/utility/local_manager.dart';
+import 'package:flutter_mobigic/routes/app_routes.dart';
+import 'package:flutter_mobigic/theme_manager/theme_config.dart';
+import 'package:flutter_mobigic/theme_manager/theme_manager.dart';
+
+final ThemeManager themeManager = ThemeManager();
+final LocaleManager localeManager = LocaleManager();
 
 void main() {
-  runApp(FlutterMobigicRoot());
+  runApp(const MaterialRoot());
 }
 
-class FlutterMobigicRoot extends StatelessWidget {
-  const FlutterMobigicRoot({super.key});
+class MaterialRoot extends StatefulWidget {
+  const MaterialRoot({super.key});
+
+  @override
+  State<MaterialRoot> createState() => _MaterialRootState();
+}
+
+class _MaterialRootState extends State<MaterialRoot> {
+  @override
+  void initState() {
+    super.initState();
+    themeManager.addListener(_themeListener);
+    localeManager.addListener(_localeListener);
+  }
+
+  void _themeListener() {
+    setState(() {});
+  }
+
+  void _localeListener() {
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    themeManager
+      ..removeListener(_themeListener)
+      ..dispose();
+    localeManager.removeListener(_localeListener);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp();
+    return MaterialApp(
+      theme: ThemeConfig.lightTheme,
+      darkTheme: ThemeConfig.darkTheme,
+      themeMode: themeManager.currentTheme(),
+      locale: localeManager.locale,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('mr'),
+      ],
+      initialRoute: AppRoutes.splashScreen,
+      onGenerateRoute: AppRoutes.generateRoutes,
+    );
   }
 }
