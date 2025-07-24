@@ -32,8 +32,6 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
     }
   }
 
-
-
   String getFormattedAge(DateTime birthDate) {
     final now = DateTime.now();
     return (birthDate.isAfter(now))
@@ -42,30 +40,17 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
   }
 
   String _getAgeDifference(DateTime birthDate, DateTime now) {
-    if (birthDate.isAfter(now)) return 'Invalid birth date';
-
     int years = now.year - birthDate.year;
     int months = now.month - birthDate.month;
     int days = now.day - birthDate.day;
 
-    if (days < 0) {
-      final prevMonth = DateTime(now.year, now.month, 0);
-      days += prevMonth.day;
-      months -= 1;
-    }
-
-    if (months < 0) {
-      months += 12;
-      years -= 1;
-    }
-
     return '$years year(s), $months month(s), $days day(s)';
   }
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     final ageText = selectedDate != null
-        ? getFormattedAge(selectedDate!)
+        ? _getAgeDifference(selectedDate!, DateTime.now())
         : null;
 
     return Column(
@@ -83,8 +68,10 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
+              
                   '2. Select your birthdate:',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 10),
                 GestureDetector(
@@ -93,11 +80,12 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
                     // Prevents keyboard interaction
                     child: TextField(
                       controller: _controller,
-                      readOnly: true, // Prevents manual typing
+                      // readOnly: true, // Prevents manual typing
                       decoration: InputDecoration(
                         hintText: 'DD-MM-YYYY',
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(80),
+
                         ),
                         suffixIcon: IconButton(
                           icon: const Icon(Icons.calendar_today),

@@ -107,6 +107,15 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
+          const AssignmentGroup(
+            title: 'Assignment 7: File Handling',
+            tasks: [
+              NavigationTile(
+                title: 'Pick file and show details',
+                route: AppRoutes.fileHandler,
+              ),
+            ],
+          ),
         ],
       ),
     );

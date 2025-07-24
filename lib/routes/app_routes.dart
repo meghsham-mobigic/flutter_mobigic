@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobigic/file_handling/file_handler.dart';
 import 'package:flutter_mobigic/grid/screens/grid_screen_home.dart';
 import 'package:flutter_mobigic/home_screen/home_screen.dart';
 import 'package:flutter_mobigic/icons/material_icons.dart';
@@ -27,6 +28,7 @@ class AppRoutes {
   static const String imageInputRoute = '/imageInput';
   static const String imagePreviewRoute = '/imagePreview';
   static const String materialIcons = '/MaterialIcons';
+  static const String fileHandler = '/fileHandler';
 
   static Route<dynamic> generateRoutes(RouteSettings settings) {
     print(settings.name);
@@ -49,6 +51,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const AspectRatioAppRoot());
       case materialIcons:
         return MaterialPageRoute(builder: (_) => const MaterialIconsAppRoot());
+      case fileHandler:
+        return MaterialPageRoute(builder: (_) => const FilePickerAppRoot());
       //if everything fails
       default:
         return MaterialPageRoute(
