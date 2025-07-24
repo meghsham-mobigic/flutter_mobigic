@@ -2,7 +2,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobigic/constants/app_colors.dart';
 import 'package:open_app_file/open_app_file.dart';
-import 'package:path/path.dart' as path;
 
 class FilePickerAppRoot extends StatefulWidget {
   const FilePickerAppRoot({super.key});
@@ -42,7 +41,7 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
         children: [
           Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -108,7 +107,7 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
                               ),
                               const SizedBox(height: 5),
                               Text(
-                                'Path: ${filesList[file].path ?? "N/A"}',
+                                'Path: ${filesList[file].path}',
                                 style: const TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey,
