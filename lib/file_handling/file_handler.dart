@@ -22,13 +22,11 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
       setState(() {
         filesList = result.files;
       });
-      printDetails(filesList);
-    } else {
-      print("no files picked");
-    }
+      showFilesList(filesList);
+    } 
   }
 
-  void printDetails(List<PlatformFile> fileList) {
+  void showFilesList(List<PlatformFile> fileList) {
     setState(() {
       hideFilesList = false;
     });
@@ -38,13 +36,13 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('File Handline in Flutter'),
+        title: const Text('File Upload in Flutter'),
       ),
       body: Column(
         children: [
           Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -54,7 +52,7 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
                     style: TextStyle(
                       color: AppColors.purple,
                       fontWeight: FontWeight.w600,
-                      fontSize: 26,
+                      fontSize: 50,
                       letterSpacing: 0.5,
                     ),
                   ),
@@ -68,7 +66,7 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
                         horizontal: 20,
                         vertical: 14,
                       ),
-                      textStyle: const TextStyle(fontSize: 16),
+                      textStyle: const TextStyle(fontSize: 15),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -88,16 +86,16 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
                     shrinkWrap: true,
                     itemBuilder: (context, file) {
                       return Card(
-                        elevation: 4,
+                        elevation: 5,
                         margin: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
+                          horizontal: 15,
+                          vertical: 10,
                         ),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(15),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -108,7 +106,7 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(height: 4),
+                              const SizedBox(height: 5),
                               Text(
                                 'Path: ${filesList[file].path ?? "N/A"}',
                                 style: const TextStyle(
@@ -116,24 +114,21 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
                                   color: Colors.grey,
                                 ),
                               ),
-                              const SizedBox(height: 4),
+                              const SizedBox(height: 5),
                               Text(
                                 'Size: ${(filesList[file].size / 1024).toStringAsFixed(2)} KB',
                                 style: const TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 15,
                                   color: Colors.grey,
                                 ),
                               ),
-                              const SizedBox(height: 12),
+                              const SizedBox(height: 10),
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: ElevatedButton.icon(
                                   onPressed: () async {
                                     final filePath = filesList[file].path;
                                     if (filePath != null) {
-                                      print(
-                                        'Opening ${filesList[file].name} at $filePath',
-                                      );
                                       await OpenAppFile.open(filePath);
                                     }
                                   },
@@ -141,10 +136,10 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
                                   label: const Text('Open File'),
                                   style: ElevatedButton.styleFrom(
                                     padding: const EdgeInsets.symmetric(
-                                      horizontal: 16,
+                                      horizontal: 15,
                                       vertical: 10,
                                     ),
-                                    textStyle: const TextStyle(fontSize: 14),
+                                    textStyle: const TextStyle(fontSize: 15),
                                   ),
                                 ),
                               ),
@@ -160,21 +155,3 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
     );
   }
 }
-
-// class FileDetails extends StatelessWidget {
-//   const FileDetails({
-//     required this.fileName,
-//     required this.fileLocation,
-//     required this.fileSize,
-//     super.key,
-//   });
-
-//   final String fileName;
-//   final String fileLocation;
-//   final String fileSize;
-
-//   @override
-//   Widget build(BuildContext context) {
-
-//   }
-// }
