@@ -1,6 +1,5 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_mobigic/constants/app_colors.dart';
 import 'package:open_app_file/open_app_file.dart';
 
