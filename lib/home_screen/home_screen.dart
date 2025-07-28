@@ -39,28 +39,28 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(15),
         children: [
           ColoredBox(
             color: Theme.of(context).primaryColor,
             child: Padding(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(10),
               child: Center(child: Text(localizations.quote)),
             ),
           ),
           const SizedBox(height: 10),
-          const AssignmentGroup(
-            title: 'Assignment 1: Page Navigation with Data',
-            tasks: [
+          AssignmentGroup(
+            title: localizations.assignement_1_title,
+            tasks: const [
               NavigationTile(
                 title: 'Multi-page Counter App',
                 route: AppRoutes.darkLightCounterAppRoot,
               ),
             ],
           ),
-          const AssignmentGroup(
-            title: 'Assignment 2: Login & Registration',
-            tasks: [
+          AssignmentGroup(
+            title: localizations.assignement_2_title,
+            tasks: const [
               NavigationTile(
                 title: 'Login Page',
                 route: AppRoutes.loginRoute,
@@ -71,48 +71,62 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          const AssignmentGroup(
-            title: 'Assignment 3: Grid Layouts',
-            tasks: [
+          AssignmentGroup(
+            title: localizations.assignement_3_title,
+            tasks: const [
               NavigationTile(
                 title: 'Calender Grid Layout Generator',
                 route: AppRoutes.gridLayoutRoute,
               ),
             ],
           ),
-          const AssignmentGroup(
-            title: 'Assignment 4: Date & Time Operations',
-            tasks: [
+          AssignmentGroup(
+            title: localizations.assignement_4_title,
+            tasks: const [
               NavigationTile(
                 title: 'Age Calculator',
                 route: AppRoutes.dateAndTimeApp,
               ),
             ],
           ),
-          const AssignmentGroup(
-            title: 'Assignment 5: Image Aspect Ratio Demo',
-            tasks: [
+          AssignmentGroup(
+            title: localizations.assignement_5_title,
+            tasks: const [
               NavigationTile(
                 title: 'Input Aspect Ratio',
                 route: AppRoutes.imageInputRoute,
               ),
             ],
           ),
-          const AssignmentGroup(
-            title: 'Assignment 6: Material Icons',
-            tasks: [
+          AssignmentGroup(
+            title: localizations.assignement_6_title,
+            tasks: const [
               NavigationTile(
                 title: 'Material Icons Sizing and Colors',
                 route: AppRoutes.materialIcons,
               ),
             ],
           ),
-          const AssignmentGroup(
-            title: 'Assignment 7: File Handling',
-            tasks: [
+          AssignmentGroup(
+            title: localizations.assignement_7_title,
+            tasks: const [
               NavigationTile(
                 title: 'Pick file and show details',
                 route: AppRoutes.fileHandler,
+              ),
+              NavigationTile(
+                title: 'Read and Write application',
+                route: AppRoutes.readWriteApp,
+              ),
+            ],
+          ),
+
+          AssignmentGroup(
+            title: localizations.assignement_8_title,
+            tasks: const [
+              NavigationTile(
+                title: 'Hive Database Implementation in flutter',
+                route: AppRoutes.hiveDB,
               ),
             ],
           ),

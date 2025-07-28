@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ThemeConfig {
+
+
+
+
   // Light Theme
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true, // Material 3 enable
@@ -11,13 +15,13 @@ class ThemeConfig {
     ),
 
     scaffoldBackgroundColor: Colors.grey.shade300,
-
+    
     // Define consistent color scheme for light theme
     colorScheme: ColorScheme.fromSeed(
       seedColor: Colors.blue,
     ),
   );
-
+//==============================================================================
   // Dark Theme
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true, // Material 3 enable disable

@@ -15,7 +15,9 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
   bool hideFilesList = true;
 
   Future<void> pickFiles() async {
-    var result = await FilePicker.platform.pickFiles(allowMultiple: true);
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      // allowMultiple: false,
+    );
 
     if (result != null) {
       setState(() {

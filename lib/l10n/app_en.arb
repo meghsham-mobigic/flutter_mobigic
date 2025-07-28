@@ -6,5 +6,14 @@
     "quote": "The only way to do great work is to love what you do.",
     "@quote": {
         "description": "A motivational quote by Steve Jobs."
-    }
+    },
+    "assignement_1_title" : "Assignment 1: Page Navigation with Data",
+    "assignement_2_title" : "Assignment 2: Login & Registration",
+    "assignement_3_title" : "Assignment 3: Grid Layouts",
+    "assignement_4_title" : "Assignment 4: Date & Time Operations",
+    "assignement_5_title" : "Assignment 5: Image Aspect Ratio Demo",
+    "assignement_6_title" : "Assignment 6: Material Icons",
+    "assignement_7_title" : "Assignment 7: File Handling'",
+    "assignement_8_title" : "Assignment 8 : Hive Flutter",
+    "assignement_9_title" : "Assignment 9 : HTTP methods"
 }

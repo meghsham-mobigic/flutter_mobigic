@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobigic/l10n/app_localizations.dart';
@@ -5,11 +6,19 @@ import 'package:flutter_mobigic/l10n/utility/local_manager.dart';
 import 'package:flutter_mobigic/routes/app_routes.dart';
 import 'package:flutter_mobigic/theme_manager/theme_config.dart';
 import 'package:flutter_mobigic/theme_manager/theme_manager.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:path_provider/path_provider.dart';
 
 final ThemeManager themeManager = ThemeManager();
 final LocaleManager localeManager = LocaleManager();
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //HIVE IMPL
+  final Directory dir = await getApplicationDocumentsDirectory(); // function in path_provider.dart
+  Hive.init(dir.path);
+  await Hive.openBox<String>('HiveBox');
   runApp(const MaterialRoot());
 }
 
@@ -62,6 +71,7 @@ class _MaterialRootState extends State<MaterialRoot> {
         Locale('en'),
         Locale('mr'),
       ],
+
       initialRoute: AppRoutes.splashScreen,
       onGenerateRoute: AppRoutes.generateRoutes,
     );

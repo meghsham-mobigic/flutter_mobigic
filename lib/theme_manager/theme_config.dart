@@ -3,6 +3,10 @@ import 'package:flutter_mobigic/constants/app_colors.dart';
 
 class ThemeConfig {
   static ThemeData lightTheme = ThemeData(
+    appBarTheme: AppBarTheme(
+      // color: AppColors.black,
+      backgroundColor: AppColors.primary,
+    ),
     useMaterial3: true,
     brightness: Brightness.light,
     primaryColor: Colors.orange,

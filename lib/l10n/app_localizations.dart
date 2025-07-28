@@ -106,6 +106,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The only way to do great work is to love what you do.'**
   String get quote;
+
+  /// No description provided for @assignement_1_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Assignment 1: Page Navigation with Data'**
+  String get assignement_1_title;
+
+  /// No description provided for @assignement_2_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Assignment 2: Login & Registration'**
+  String get assignement_2_title;
+
+  /// No description provided for @assignement_3_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Assignment 3: Grid Layouts'**
+  String get assignement_3_title;
+
+  /// No description provided for @assignement_4_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Assignment 4: Date & Time Operations'**
+  String get assignement_4_title;
+
+  /// No description provided for @assignement_5_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Assignment 5: Image Aspect Ratio Demo'**
+  String get assignement_5_title;
+
+  /// No description provided for @assignement_6_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Assignment 6: Material Icons'**
+  String get assignement_6_title;
+
+  /// No description provided for @assignement_7_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Assignment 7: File Handling\''**
+  String get assignement_7_title;
+
+  /// No description provided for @assignement_8_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Assignment 8 : Hive Flutter'**
+  String get assignement_8_title;
+
+  /// No description provided for @assignement_9_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Assignment 9 : HTTP methods'**
+  String get assignement_9_title;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

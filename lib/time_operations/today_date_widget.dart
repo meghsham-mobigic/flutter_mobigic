@@ -46,7 +46,7 @@ class _TodayDateWidgetState extends State<TodayDateWidget> {
       margin: const EdgeInsets.symmetric(vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(15),
         child: SizedBox(
           width: double.infinity,
           child: Column(

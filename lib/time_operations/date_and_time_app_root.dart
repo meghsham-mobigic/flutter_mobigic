@@ -11,7 +11,7 @@ class DateAndTimeAppRoot extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Date & Time Tasks'), centerTitle: true),
       body: const Padding(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [TodayDateWidget(), BirthdateWidget()],
