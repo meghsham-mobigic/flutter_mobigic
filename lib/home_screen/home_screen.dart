@@ -130,6 +130,16 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
+
+          const AssignmentGroup(
+            title: 'Http Method implementations',
+            tasks: [
+              NavigationTile(
+                title: 'Http Method Implementations in flutter',
+                route: AppRoutes.httpMethod,
+              ),
+            ],
+          ),
         ],
       ),
     );

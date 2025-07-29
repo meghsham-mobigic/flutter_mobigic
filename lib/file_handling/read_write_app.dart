@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobigic/constants/app_colors.dart';
+import 'package:flutter_mobigic/http_methods/helper/helper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -12,35 +13,32 @@ class ReadWriteAppRoot extends StatefulWidget {
 }
 
 class _ReadWriteAppRootState extends State<ReadWriteAppRoot> {
-  TextEditingController _noteController = TextEditingController();
+  final TextEditingController _noteController = TextEditingController();
+  late final Directory directory;
+  late final File file;
 
   @override
   void initState() {
     super.initState();
-    getSavedNote();
+    _loadNote();
   }
 
-  //read
-  Future<void> getSavedNote() async {
-    Directory directory = await getApplicationDocumentsDirectory(); // folder
-    File file = File('${directory.path}/aniket.txt'); // file
+  Future<void> _loadNote() async {
+    directory = await getApplicationDocumentsDirectory();
+    file = File('${directory.path}/notes.txt');
+    if (await file.exists() == false) {
+      await file.writeAsString('');
+    }
 
-    // if (!await file.exists()) {
-    //   await file.writeAsString('');
-    // }
-
-    _noteController.text = await file.readAsString();
+    String content = await file.readAsString();
+    setState(() {
+      _noteController.text = content;
+    });
   }
 
-  //write
   Future<void> saveAndCommit() async {
-    Directory directory = await getApplicationDocumentsDirectory();
-    File file = File('${directory.path}/notes.txt');
     await file.writeAsString(_noteController.text);
-    await Fluttertoast.showToast(
-      msg: 'note saved',
-      backgroundColor: AppColors.primary,
-    );
+    await Helper.toast('note saved');
   }
 
   @override
@@ -56,14 +54,7 @@ class _ReadWriteAppRootState extends State<ReadWriteAppRoot> {
                 controller: _noteController,
                 maxLines: 30,
                 decoration: const InputDecoration(
-                  alignLabelWithHint: false,
-                  prefixIcon: Align(
-                    alignment: Alignment.topLeft,
-                    widthFactor: 0.5, // Control width scaling
-                    heightFactor: 5.0, // Control height scaling
-                  ),
                   icon: Icon(
-                  
                     Icons.notes_rounded,
                     weight: 20,
                   ),
@@ -72,12 +63,20 @@ class _ReadWriteAppRootState extends State<ReadWriteAppRoot> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
-                  // focusedBorder: OutlineInputBorder()
                 ),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: saveAndCommit,
+                style: ElevatedButton.styleFrom(
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 50,
+                  ),
+                  foregroundColor: AppColors.white,
+                  backgroundColor: AppColors.green,
+                  elevation: 5,
+                ),
                 child: const Text('Commit'),
               ),
             ],
