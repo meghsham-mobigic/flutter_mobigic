@@ -5,9 +5,9 @@ class GenderSelector extends StatelessWidget {
   final ValueChanged<String?> onChanged;
 
   const GenderSelector({
-    Key? key,
     required this.gender,
     required this.onChanged,
+    Key? key,
   }) : super(key: key);
 
   @override
