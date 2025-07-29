@@ -105,7 +105,7 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
                                 Text(
                                   'File Name: ${filesList[file].name}',
                                   style: const TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

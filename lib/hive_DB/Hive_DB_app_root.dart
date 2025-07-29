@@ -11,12 +11,12 @@ class HiveDBAppRoot extends StatefulWidget {
 
 class _HiveDBAppRootState extends State<HiveDBAppRoot> {
   late Box<String> _studentsData;
+  String readAllStudent = '';
 
   String? selectedAction;
 
   final TextEditingController rollNoController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
-  // final TextEditingController readResultController = TextEditingController();
 
   @override
   void initState() {
@@ -24,6 +24,11 @@ class _HiveDBAppRootState extends State<HiveDBAppRoot> {
     _studentsData = Hive.box<String>(
       'HiveBox',
     );
+  }
+
+  void clearData() {
+    rollNoController.clear();
+    nameController.clear();
   }
 
   @override
@@ -34,57 +39,32 @@ class _HiveDBAppRootState extends State<HiveDBAppRoot> {
         child: Center(
           child: Column(
             children: [
-              const SizedBox(height: 16),
+              const SizedBox(height: 15),
               Wrap(
                 spacing: 10,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedAction = 'create';
-                        rollNoController.clear();
-                        nameController.clear();
-                      });
-                    },
-                    child: const Text('Create'),
+                  _operataionButton(
+                    selectedLabel: 'Create',
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedAction = 'read';
-                        rollNoController.clear();
-                        nameController.clear();
-                      });
-                    },
-                    child: const Text('Read'),
+
+                  _operataionButton(
+                    selectedLabel: 'Read',
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedAction = 'update';
-                        rollNoController.clear();
-                        nameController.clear();
-                      });
-                    },
-                    child: const Text('Update'),
+
+                  _operataionButton(
+                    selectedLabel: 'Update',
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        selectedAction = 'delete';
-                        rollNoController.clear();
-                        nameController.clear();
-                      });
-                    },
-                    child: const Text('Delete'),
+
+                  _operataionButton(
+                    selectedLabel: 'Delete',
                   ),
                 ],
               ),
               const SizedBox(height: 20),
-              if (selectedAction == 'create') _buildCreateForm(),
-              if (selectedAction == 'read') _buildReadForm(),
-              if (selectedAction == 'update') _buildUpdateForm(),
-              if (selectedAction == 'delete') _buildDeleteForm(),
+              if (selectedAction == 'Create') _buildCreateForm(),
+              if (selectedAction == 'Read') _buildReadForm(),
+              if (selectedAction == 'Update') _buildUpdateForm(),
+              if (selectedAction == 'Delete') _buildDeleteForm(),
             ],
           ),
         ),
@@ -96,9 +76,9 @@ class _HiveDBAppRootState extends State<HiveDBAppRoot> {
     return _formContainer(
       children: [
         _rollNoField(),
-        const SizedBox(height: 16),
+        const SizedBox(height: 15),
         _nameField(),
-        const SizedBox(height: 16),
+        const SizedBox(height: 15),
         ElevatedButton(
           onPressed: () {
             final roll = int.tryParse(rollNoController.text);
@@ -122,7 +102,7 @@ class _HiveDBAppRootState extends State<HiveDBAppRoot> {
     return _formContainer(
       children: [
         _rollNoField(),
-        const SizedBox(height: 16),
+        const SizedBox(height: 15),
         TextField(
           controller: nameController,
           enabled: false,
@@ -131,15 +111,25 @@ class _HiveDBAppRootState extends State<HiveDBAppRoot> {
             border: OutlineInputBorder(),
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 15),
         ElevatedButton(
           onPressed: () {
             final roll = int.tryParse(rollNoController.text);
             if (roll != null) readStudent(roll);
+            _displayAllStudentName();
           },
           child: const Text('Read Student'),
         ),
+        const SizedBox(height: 15),
+        // Text(readAllStudent),
+        _displayAllStudentName(),
       ],
+    );
+  }
+
+  Widget _displayAllStudentName() {
+    return Card(
+      child: Text(readAllStudent),
     );
   }
 
@@ -151,20 +141,19 @@ class _HiveDBAppRootState extends State<HiveDBAppRoot> {
       nameController.text = '';
       Fluttertoast.showToast(msg: 'Student not found');
     }
-    readStudentAll();
   }
 
-  void readStudentAll() {
-    print('=>${_studentsData.values}');
+  void readAllStudentStringGenerator() {
+    readAllStudent = 'All students are ${_studentsData.values}';
   }
 
   Widget _buildUpdateForm() {
     return _formContainer(
       children: [
         _rollNoField(),
-        const SizedBox(height: 16),
+        const SizedBox(height: 15),
         _nameField(label: 'Updated Name'),
-        const SizedBox(height: 16),
+        const SizedBox(height: 15),
         ElevatedButton(
           onPressed: () {
             final roll = int.tryParse(rollNoController.text);
@@ -192,7 +181,7 @@ class _HiveDBAppRootState extends State<HiveDBAppRoot> {
     return _formContainer(
       children: [
         _rollNoField(),
-        const SizedBox(height: 16),
+        const SizedBox(height: 15),
         ElevatedButton(
           onPressed: () {
             final roll = int.tryParse(rollNoController.text);
@@ -248,6 +237,19 @@ class _HiveDBAppRootState extends State<HiveDBAppRoot> {
         labelText: label,
         border: const OutlineInputBorder(),
       ),
+    );
+  }
+
+  Widget _operataionButton({required String selectedLabel}) {
+    return ElevatedButton(
+      onPressed: () {
+        setState(() {
+          readAllStudentStringGenerator();
+          selectedAction = selectedLabel;
+          clearData();
+        });
+      },
+      child: Text(selectedLabel),
     );
   }
 

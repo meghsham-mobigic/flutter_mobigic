@@ -57,6 +57,7 @@ class _MaterialRootState extends State<MaterialRoot> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeConfig.lightTheme,
       darkTheme: ThemeConfig.darkTheme,
       themeMode: themeManager.currentTheme(),

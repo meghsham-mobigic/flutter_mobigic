@@ -70,7 +70,7 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
                 const Text(
               
                   '2. Select your birthdate:',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 10),
@@ -99,7 +99,7 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
                 if (ageText != null)
                   Text(
                     'You are $ageText old',
-                    style: const TextStyle(fontSize: 16, color: AppColors.blue),
+                    style: const TextStyle(fontSize: 15, color: AppColors.blue),
                   ),
               ],
             ),
@@ -123,7 +123,7 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
                     const Text(
                       'Epoch Time (Milliseconds):',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 15,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -140,7 +140,7 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
                 Center(
                   child: Text(
                     'Current Date in Milliseconds since Epoch :\n ${DateTime.now().millisecondsSinceEpoch}',
-                    style: const TextStyle(fontSize: 16, color: AppColors.blue),
+                    style: const TextStyle(fontSize: 15, color: AppColors.blue),
                   ),
                 ),
                 if (selectedDate != null)
@@ -148,7 +148,7 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
                     child: Text(
                       'Selected Date in Milliseconds since Epoch:\n ${selectedDate!.millisecondsSinceEpoch}',
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: 15,
                         color: AppColors.blue,
                       ),
                     ),

@@ -85,7 +85,7 @@ class _CalendarInputFormState extends State<CalendarInputForm> {
                         const Text(
                           'Select Layout:',
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -115,7 +115,7 @@ class _CalendarInputFormState extends State<CalendarInputForm> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 15),
                 Card(
                   child: Padding(
                     padding: const EdgeInsets.all(15),
@@ -125,7 +125,7 @@ class _CalendarInputFormState extends State<CalendarInputForm> {
                         const Text(
                           'Month Starts:',
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -155,7 +155,7 @@ class _CalendarInputFormState extends State<CalendarInputForm> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 15),
 
                 Card(
                   child: Padding(
@@ -166,7 +166,7 @@ class _CalendarInputFormState extends State<CalendarInputForm> {
                         const Text(
                           'Days in Month:',
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

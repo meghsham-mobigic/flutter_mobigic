@@ -25,9 +25,9 @@ class _ReadWriteAppRootState extends State<ReadWriteAppRoot> {
     Directory directory = await getApplicationDocumentsDirectory(); // folder
     File file = File('${directory.path}/aniket.txt'); // file
 
-    if (!await file.exists()) {
-      await file.writeAsString('');
-    }
+    // if (!await file.exists()) {
+    //   await file.writeAsString('');
+    // }
 
     _noteController.text = await file.readAsString();
   }
@@ -35,12 +35,11 @@ class _ReadWriteAppRootState extends State<ReadWriteAppRoot> {
   //write
   Future<void> saveAndCommit() async {
     Directory directory = await getApplicationDocumentsDirectory();
-    File file = File('${directory.path}/aniket.txt');
+    File file = File('${directory.path}/notes.txt');
     await file.writeAsString(_noteController.text);
-
     await Fluttertoast.showToast(
       msg: 'note saved',
-      backgroundColor: Colors.grey,
+      backgroundColor: AppColors.primary,
     );
   }
 
@@ -57,7 +56,14 @@ class _ReadWriteAppRootState extends State<ReadWriteAppRoot> {
                 controller: _noteController,
                 maxLines: 30,
                 decoration: const InputDecoration(
+                  alignLabelWithHint: false,
+                  prefixIcon: Align(
+                    alignment: Alignment.topLeft,
+                    widthFactor: 0.5, // Control width scaling
+                    heightFactor: 5.0, // Control height scaling
+                  ),
                   icon: Icon(
+                  
                     Icons.notes_rounded,
                     weight: 20,
                   ),
@@ -72,20 +78,6 @@ class _ReadWriteAppRootState extends State<ReadWriteAppRoot> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: saveAndCommit,
-
-                //appply theme config colors
-                //style: ButtonStyle(
-                //   backgroundColor: ThemeConfig.darkTheme
-                // ),
-                style: ElevatedButton.styleFrom(
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 50,
-                  ),
-                  foregroundColor: AppColors.white,
-                  backgroundColor: AppColors.green,
-                  elevation: 5,
-                ),
                 child: const Text('Commit'),
               ),
             ],
@@ -95,7 +87,3 @@ class _ReadWriteAppRootState extends State<ReadWriteAppRoot> {
     );
   }
 }
-
-
-
-// Reduce repetative code

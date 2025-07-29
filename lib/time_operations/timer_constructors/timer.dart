@@ -142,7 +142,7 @@ class _TimerImplementationState extends State<TimerImplementation> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       elevation: 4,
-                      textStyle: const TextStyle(fontSize: 16),
+                      textStyle: const TextStyle(fontSize: 15),
                     ),
                     onPressed: isClicked ? null : startCounterWithTimer,
                     child: const Text("Start Timer"),

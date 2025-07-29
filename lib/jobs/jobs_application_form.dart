@@ -131,12 +131,12 @@ class _JobApplicationFormScreenState extends State<JobApplicationFormScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 15),
                 GenderSelector(
                   gender: _gender,
                   onChanged: (value) => setState(() => _gender = value),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 15),
                 JobDropdown(
                   jobRole: _jobRole,
                   onChanged: (value) {
@@ -146,7 +146,7 @@ class _JobApplicationFormScreenState extends State<JobApplicationFormScreen> {
                     _updateSkillsForRole(value);
                   },
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 15),
                 if (_jobRole != null)
                   SkillCheckboxes(
                     skills: _skills,

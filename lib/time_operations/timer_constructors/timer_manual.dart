@@ -59,7 +59,7 @@
 //                         color: AppColors.blue,
 //                       ),
 //                     ),
-//                     const SizedBox(height: 16),
+//                     const SizedBox(height: 15),
 //                     Padding(
 //                       padding: const EdgeInsets.symmetric(horizontal: 20),
 //                       child: LinearProgressIndicator(

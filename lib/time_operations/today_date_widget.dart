@@ -54,22 +54,22 @@ class _TodayDateWidgetState extends State<TodayDateWidget> {
             children: [
               const Text(
                 "1. Today's Date and Time:",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 10),
               Text(
                 'Current: ${formatter.format(now)}',
-                style: const TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 15),
               ),
               const SizedBox(height: 6),
               Text(
                 '9.5 hrs Before: ${formatter.format(before)}',
-                style: const TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 15),
               ),
               const SizedBox(height: 6),
               Text(
                 '9.5 hrs After: ${formatter.format(after)}',
-                style: const TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 15),
               ),
             ],
           ),
