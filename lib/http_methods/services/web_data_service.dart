@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_mobigic/constants/app_string_constants.dart';
 import 'package:flutter_mobigic/http_methods/Model/product_model.dart';
 import 'package:flutter_mobigic/http_methods/helper/helper.dart';
@@ -16,8 +16,11 @@ class WebDataService implements DataService {
 
   @override
   Future<http.Response> createProduct(Map<String, dynamic> values) async {
-    final response =
-    await caller.create(ApiConstants.fakeProductBasePath, headers, values);
+    final response = await HttpCalls.create(
+      ApiConstants.fakeProductBasePath,
+      headers,
+      values,
+    );
 
     if (response.statusCode == 200) {
       final decodedProduct = jsonDecode(response.body) as Map<String, dynamic>;
@@ -33,7 +36,7 @@ class WebDataService implements DataService {
   // Method to collect all product from api endpoint -> working
   @override
   Future<List<ProductModel>> realAllProduct() async {
-    final response = await caller.getAll(
+    final response = await HttpCalls.getAll(
       ApiConstants.fakeProductBasePath,
       headers,
     );
@@ -55,8 +58,8 @@ class WebDataService implements DataService {
 
   @override
   Future<http.Response> updateProduct(Map<String, dynamic> values) async {
-    final response = await caller.update(
-      ApiConstants.fakeProductBasePath, 
+    final response = await HttpCalls.update(
+      ApiConstants.fakeProductBasePath,
       int.parse(values['id'].toString()),
       headers,
       values,
@@ -74,7 +77,7 @@ class WebDataService implements DataService {
 
   @override
   Future<void> deleteProduct(int id) async {
-    final response = await caller.delete(
+    final response = await HttpCalls.delete(
       ApiConstants.fakeProductBasePath,
       headers,
       id,
@@ -90,6 +93,4 @@ class WebDataService implements DataService {
     }
     return;
   }
-
-
 }

@@ -5,6 +5,7 @@ import 'package:flutter_mobigic/grid/screens/grid_calendar_input_form.dart';
 import 'package:flutter_mobigic/hive_DB/hive_app_root.dart';
 import 'package:flutter_mobigic/home_screen/home_screen.dart';
 import 'package:flutter_mobigic/http_methods/Model/product_model.dart';
+import 'package:flutter_mobigic/http_methods/image_multipart/image_upload_screen.dart';
 import 'package:flutter_mobigic/http_methods/screen/product_create.dart';
 import 'package:flutter_mobigic/http_methods/screen/product_dashboard.dart';
 import 'package:flutter_mobigic/http_methods/screen/product_details.dart';
@@ -40,6 +41,7 @@ class AppRoutes {
   static const String editProduct = '/editProduct';
   static const String addProduct = '/addProduct';
   static const String detailsProduct = '/detailsProduct';
+  static const String imageUploader = '/imageUploader';
 
   static Route<dynamic> generateRoutes(RouteSettings settings) {
     switch (settings.name) {
@@ -67,6 +69,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const ReadWriteAppRoot());
       case hiveDB:
         return MaterialPageRoute(builder: (_) => const HiveDBAppRoot());
+      case imageUploader:
+        return MaterialPageRoute(builder: (_) => const ImageUploaderHome());
       case httpMethod:
         return MaterialPageRoute(builder: (_) => const ProductDashboard());
       case editProduct:

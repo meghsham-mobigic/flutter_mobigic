@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobigic/constants/app_colors.dart';
 
 class FailureScreen extends StatelessWidget {
   const FailureScreen({super.key});
@@ -15,7 +16,7 @@ class FailureScreen extends StatelessWidget {
             const SizedBox(height: 20),
             const Text(
               'Login Failed!',
-              style: TextStyle(fontSize: 24, color: Colors.red),
+              style: TextStyle(fontSize: 24, color: AppColors.red),
             ),
             const SizedBox(height: 20),
             ElevatedButton(

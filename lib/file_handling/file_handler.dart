@@ -12,10 +12,13 @@ class FilePickerAppRoot extends StatefulWidget {
 class _FilePickerAppRoot extends State<FilePickerAppRoot> {
   List<PlatformFile> filesList = [];
   bool hideFilesList = true;
+  bool filePicked = false;
 
   Future<void> pickFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
-      // allowMultiple: false,
+      allowMultiple: true,
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'png', 'jpeg'],
     );
 
     if (result != null) {
@@ -23,7 +26,7 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
         filesList = result.files;
       });
       showFilesList(filesList);
-    } 
+    }
   }
 
   void showFilesList(List<PlatformFile> fileList) {
@@ -55,7 +58,7 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
                     ElevatedButton.icon(
                       onPressed: pickFiles,
                       icon: const Icon(Icons.file_upload),
-                      label: const Text('Upload File'),
+                      label: const Text('Upload Files'),
                     ),
                   ],
                 ),
@@ -96,7 +99,6 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
                                   'Path: ${filesList[file].path}',
                                   style: const TextStyle(
                                     fontSize: 14,
-                                
                                   ),
                                 ),
                                 const SizedBox(height: 5),
@@ -104,22 +106,29 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
                                   'Size: ${(filesList[file].size / 1024).toStringAsFixed(2)} KB',
                                   style: const TextStyle(
                                     fontSize: 15,
-                                
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: ElevatedButton.icon(
-                                    onPressed: () async {
-                                      final filePath = filesList[file].path;
-                                      if (filePath != null) {
-                                        await OpenAppFile.open(filePath);
-                                      }
-                                    },
-                                    icon: const Icon(Icons.open_in_new),
-                                    label: const Text('Open File'),
-                                  ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    ElevatedButton.icon(
+                                      onPressed: () async {
+                                        final filePath = filesList[file].path;
+                                        if (filePath != null) {
+                                          await OpenAppFile.open(filePath);
+                                        }
+                                      },
+                                      icon: const Icon(Icons.open_in_new),
+                                      label: const Text('Open File'),
+                                    ),
+                                    ElevatedButton.icon(
+                                      onPressed: () async {},
+                                      icon: const Icon(Icons.open_in_new),
+                                      label: const Text('Upload File'),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),

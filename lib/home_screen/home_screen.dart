@@ -138,6 +138,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: 'Http Method Implementations in flutter',
                 route: AppRoutes.httpMethod,
               ),
+              NavigationTile(
+                title: 'Image upload using Multi-part Data in flutter',
+                route: AppRoutes.imageUploader,
+              ),
             ],
           ),
         ],

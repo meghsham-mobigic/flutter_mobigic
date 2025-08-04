@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobigic/l10n/app_localizations.dart';
@@ -16,7 +17,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   //HIVE IMPL
-  final Directory dir = await getApplicationDocumentsDirectory(); // function in path_provider.dart
+  final Directory dir =
+      await getApplicationDocumentsDirectory(); // function in path_provider.dart
   Hive.init(dir.path);
   await Hive.openBox<String>('HiveBox');
   runApp(const MaterialRoot());
@@ -72,7 +74,7 @@ class _MaterialRootState extends State<MaterialRoot> {
         Locale('en'),
         Locale('mr'),
       ],
-      // home: const UpdateProduct(), 
+      // home: const ImageUploaderHome(),
       initialRoute: AppRoutes.splashScreen,
       onGenerateRoute: AppRoutes.generateRoutes,
     );
