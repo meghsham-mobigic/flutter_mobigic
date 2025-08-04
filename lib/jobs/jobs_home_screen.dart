@@ -35,38 +35,18 @@ class HomeScreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: () =>
                     Navigator.pushNamed(context, AppRoutes.registerRoute),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.pinkAccent,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 16,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
                 child: const Text(
                   "Register",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
               ),
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: () =>
                     Navigator.pushNamed(context, AppRoutes.loginRoute),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.lightGreen,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 48,
-                    vertical: 16,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
                 child: const Text(
                   "Login",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
               ),
             ],

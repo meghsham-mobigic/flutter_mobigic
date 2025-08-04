@@ -7,7 +7,7 @@ class Helper {
 
   static Future<void> toast(String text) async {
      await Fluttertoast.showToast(
-      msg: 'note saved'
+      msg: text
     );
   }
 }

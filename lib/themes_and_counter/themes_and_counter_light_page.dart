@@ -38,10 +38,6 @@ class LightModeCounterPage extends StatelessWidget {
               left: 20,
               child: ElevatedButton(
                 onPressed: onSwitch,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  foregroundColor: Colors.white,
-                ),
                 child: const Text('Go to Dark Mode'),
               ),
             ),

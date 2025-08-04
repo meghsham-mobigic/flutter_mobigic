@@ -20,18 +20,4 @@ class AppColors {
   static const Color grey = Color(0xFF9E9E9E);
   static const Color brown = Color(0xFF795548);
   static const Color teal = Color(0xFF009688);
-
-  // defined color for theme that changes with applied theme
-  // static Color tertiary(BuildContext context) {
-  //   return Theme.of(context).brightness == Brightness.light
-  //       ? AppColors
-  //             .primary // light theme - light blue color
-  //       : AppColors.secondary; // dark theme - vibrant medium blue
-  // }
-
-  // static Color tertiary3(BuildContext context) {
-  //   return Theme.of(context).brightness == Brightness.light
-  //       ? const Color(0xFF69C0FF)
-  //       : const Color(0xFF0094FF);
-  // }
 }

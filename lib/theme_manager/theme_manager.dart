@@ -12,7 +12,7 @@ class ThemeManager extends ChangeNotifier with WidgetsBindingObserver {
   }
 
   void toggleTheme() {
-    print('Toggling theme: $isDarkTheme');
+    // debugPrint('Toggling theme: $isDarkTheme');
     isDarkTheme = !isDarkTheme;
     notifyListeners();
   }

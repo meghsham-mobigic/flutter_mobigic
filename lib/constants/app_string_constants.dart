@@ -6,4 +6,9 @@ class StringConstants {
   static const String lightTheme = 'Light Theme';
   static const String darkTheme = 'Dark Theme';
   static const String systemTheme = 'System Theme';
+
+}
+
+class ApiConstants {
+    static const String fakeProductBasePath = 'https://fakestoreapi.com/products';
 }

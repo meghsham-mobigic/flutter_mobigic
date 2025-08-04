@@ -43,7 +43,7 @@ class _TodayDateWidgetState extends State<TodayDateWidget> {
 
     return Card(
       elevation: 4,
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(15),

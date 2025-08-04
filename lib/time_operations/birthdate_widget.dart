@@ -58,7 +58,7 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
       children: [
         Card(
           elevation: 4,
-          margin: const EdgeInsets.symmetric(vertical: 8),
+          margin: const EdgeInsets.symmetric(vertical: 10),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -77,10 +77,8 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
                 GestureDetector(
                   onTap: () => _pickDate(context),
                   child: AbsorbPointer(
-                    // Prevents keyboard interaction
                     child: TextField(
                       controller: _controller,
-                      // readOnly: true, // Prevents manual typing
                       decoration: InputDecoration(
                         hintText: 'DD-MM-YYYY',
                         border: OutlineInputBorder(
@@ -108,7 +106,7 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
 
         Card(
           elevation: 4,
-          margin: const EdgeInsets.symmetric(vertical: 8),
+          margin: const EdgeInsets.symmetric(vertical: 10),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),

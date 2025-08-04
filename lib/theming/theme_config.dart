@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobigic/constants/app_colors.dart';
 
 class ThemeConfig {
-
-
 
 
   // Light Theme
@@ -20,15 +19,23 @@ class ThemeConfig {
     colorScheme: ColorScheme.fromSeed(
       seedColor: Colors.blue,
     ),
+
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+      ),
+    )
   );
+  
 //==============================================================================
   // Dark Theme
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true, // Material 3 enable disable
 
     appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.black87,
-      foregroundColor: Colors.white70,
+      backgroundColor: AppColors.black,
+      foregroundColor: AppColors.primary,
     ),
 
     scaffoldBackgroundColor: Colors.grey.shade700,
@@ -37,5 +44,12 @@ class ThemeConfig {
       seedColor: Colors.blue, // Same primary seed, works well in dark too
       brightness: Brightness.dark, // Dark theme brightness
     ),
+
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.black,
+      ),
+      )
   );
 }

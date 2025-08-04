@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobigic/constants/app_colors.dart';
 import 'package:flutter_mobigic/http_methods/helper/helper.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ReadWriteAppRoot extends StatefulWidget {
@@ -68,15 +67,6 @@ class _ReadWriteAppRootState extends State<ReadWriteAppRoot> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: saveAndCommit,
-                style: ElevatedButton.styleFrom(
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 50,
-                  ),
-                  foregroundColor: AppColors.white,
-                  backgroundColor: AppColors.green,
-                  elevation: 5,
-                ),
                 child: const Text('Commit'),
               ),
             ],

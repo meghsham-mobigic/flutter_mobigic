@@ -96,13 +96,13 @@ class _TimerImplementationState extends State<TimerImplementation> {
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   enabled: !isClicked,
-                  style: const TextStyle(fontSize: 18),
+                  style: const TextStyle(fontSize: 20),
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
                     contentPadding: const EdgeInsets.symmetric(
-                      vertical: 16,
-                      horizontal: 12,
+                      vertical: 15,
+                      horizontal: 10,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -117,7 +117,7 @@ class _TimerImplementationState extends State<TimerImplementation> {
                   Text(
                     "Timer is running: $secondsElapsed second${secondsElapsed == 1 ? '' : 's'} elapsed",
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.w600,
                       color: Colors.indigo.shade800,
                     ),
@@ -134,16 +134,6 @@ class _TimerImplementationState extends State<TimerImplementation> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.indigo.shade700,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      elevation: 4,
-                      textStyle: const TextStyle(fontSize: 15),
-                    ),
                     onPressed: isClicked ? null : startCounterWithTimer,
                     child: const Text("Start Timer"),
                   ),

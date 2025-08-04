@@ -4,7 +4,11 @@ import 'package:flutter_mobigic/file_handling/read_write_app.dart';
 import 'package:flutter_mobigic/grid/screens/grid_calendar_input_form.dart';
 import 'package:flutter_mobigic/hive_DB/hive_app_root.dart';
 import 'package:flutter_mobigic/home_screen/home_screen.dart';
-import 'package:flutter_mobigic/http_methods/httpMethodAppRoot.dart';
+import 'package:flutter_mobigic/http_methods/Model/product_model.dart';
+import 'package:flutter_mobigic/http_methods/screen/product_create.dart';
+import 'package:flutter_mobigic/http_methods/screen/product_dashboard.dart';
+import 'package:flutter_mobigic/http_methods/screen/product_details.dart';
+import 'package:flutter_mobigic/http_methods/screen/product_update.dart';
 import 'package:flutter_mobigic/icons/material_icons.dart';
 import 'package:flutter_mobigic/images_in_ratio/image_input_page.dart';
 import 'package:flutter_mobigic/jobs/jobs_login.dart';
@@ -33,6 +37,9 @@ class AppRoutes {
   static const String readWriteApp = '/readWriteApp';
   static const String hiveDB = '/hiveDB';
   static const String httpMethod = '/httpMethod';
+  static const String editProduct = '/editProduct';
+  static const String addProduct = '/addProduct';
+  static const String detailsProduct = '/detailsProduct';
 
   static Route<dynamic> generateRoutes(RouteSettings settings) {
     switch (settings.name) {
@@ -60,8 +67,21 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const ReadWriteAppRoot());
       case hiveDB:
         return MaterialPageRoute(builder: (_) => const HiveDBAppRoot());
-      // case httpMethod:
-      //   return MaterialPageRoute(builder: (_) => Httpmethodapproot());
+      case httpMethod:
+        return MaterialPageRoute(builder: (_) => const ProductDashboard());
+      case editProduct:
+        ProductModel product = settings.arguments! as ProductModel;
+        return MaterialPageRoute(
+          builder: (_) => UpdateProduct(product: product),
+        );
+      case addProduct:
+        return MaterialPageRoute(builder: (_) => CreateProduct());
+      case detailsProduct:
+        final product = settings.arguments! as ProductModel;
+        return MaterialPageRoute(
+          builder: (_) => ProductDetailScreen(product: product),
+        );
+
       //if everything fails
       default:
         return MaterialPageRoute(
@@ -73,5 +93,3 @@ class AppRoutes {
     }
   }
 }
-
-

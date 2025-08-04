@@ -1,6 +1,5 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobigic/constants/app_colors.dart';
 import 'package:open_app_file/open_app_file.dart';
 
 class FilePickerAppRoot extends StatefulWidget {
@@ -51,29 +50,12 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
                     const Text(
                       'Choose a file',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColors.purple,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 50,
-                        letterSpacing: 0.5,
-                      ),
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton.icon(
                       onPressed: pickFiles,
                       icon: const Icon(Icons.file_upload),
                       label: const Text('Upload File'),
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 14,
-                        ),
-                        textStyle: const TextStyle(fontSize: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        elevation: 3,
-                      ),
                     ),
                   ],
                 ),
@@ -114,7 +96,7 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
                                   'Path: ${filesList[file].path}',
                                   style: const TextStyle(
                                     fontSize: 14,
-                                    color: Colors.grey,
+                                
                                   ),
                                 ),
                                 const SizedBox(height: 5),
@@ -122,7 +104,7 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
                                   'Size: ${(filesList[file].size / 1024).toStringAsFixed(2)} KB',
                                   style: const TextStyle(
                                     fontSize: 15,
-                                    color: Colors.grey,
+                                
                                   ),
                                 ),
                                 const SizedBox(height: 10),
@@ -137,13 +119,6 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
                                     },
                                     icon: const Icon(Icons.open_in_new),
                                     label: const Text('Open File'),
-                                    style: ElevatedButton.styleFrom(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 15,
-                                        vertical: 10,
-                                      ),
-                                      textStyle: const TextStyle(fontSize: 15),
-                                    ),
                                   ),
                                 ),
                               ],

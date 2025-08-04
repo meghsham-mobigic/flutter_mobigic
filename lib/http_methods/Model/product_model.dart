@@ -1,11 +1,12 @@
 class ProductModel {
-  int id;
-  String title;
-  double price;
-  String description;
-  String category;
-  String image;
-  String rating;
+  final int id;
+  final String title;
+  final double price;
+  final String description;
+  final String category;
+  final String image;
+  final double rating;
+  final int ratingCount;
 
   ProductModel({
     required this.id,
@@ -13,31 +14,24 @@ class ProductModel {
     required this.price,
     required this.description,
     required this.category,
-    this.image = '',
-    this.rating = '',
+    required this.image,
+    required this.rating,
+    required this.ratingCount,
+    
   });
 
-factory ProductModel.fromJson(Map<dynamic, dynamic> json) {
-    return ProductModel(
-      id: int.tryParse(json['id'].toString()) ?? 0,
-      title: json['title'].toString(),
-      price: double.tryParse(json['price'].toString()) ?? 0.0,
-      description: json['description'].toString(),
-      category: json['category'].toString(),
-      image: json['image'].toString(),
-      rating: json['rating'].toString(),
-    );
-  }
+  factory ProductModel.fromJson(Map<String, dynamic> json) {
+    final ratingData = json['rating'] ?? {};
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'price': price,
-      'description': description,
-      'category': category,
-      'image': image,
-      'rating': rating,
-    };
+    return ProductModel(
+      id: int.parse(json['id'].toString()),
+      title: json['title'] as String? ?? 'default title',
+      price: double.parse(json['price'].toString()),
+      description: json['description'] as String? ?? 'default description',
+      category: json['category'] as String? ?? 'default category',
+      image: json['image'] as String? ?? 'default image',
+      rating: (ratingData['rate'] as num?)?.toDouble() ?? 0.0,
+      ratingCount: (ratingData['count'] as num?)?.toInt() ?? 0,
+    );
   }
 }

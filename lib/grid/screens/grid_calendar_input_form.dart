@@ -65,7 +65,6 @@ class _CalendarInputFormState extends State<CalendarInputForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Calendar Configuration'),
       ),
       body: SingleChildScrollView(
@@ -85,7 +84,7 @@ class _CalendarInputFormState extends State<CalendarInputForm> {
                         const Text(
                           'Select Layout:',
                           style: TextStyle(
-                            fontSize: 15,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -95,8 +94,8 @@ class _CalendarInputFormState extends State<CalendarInputForm> {
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 8,
+                              horizontal: 10,
+                              vertical: 10,
                             ),
                           ),
                           items: _layoutOptions.entries.map((entry) {
@@ -125,7 +124,7 @@ class _CalendarInputFormState extends State<CalendarInputForm> {
                         const Text(
                           'Month Starts:',
                           style: TextStyle(
-                            fontSize: 15,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -135,8 +134,8 @@ class _CalendarInputFormState extends State<CalendarInputForm> {
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 8,
+                              horizontal: 10,
+                              vertical: 10,
                             ),
                           ),
                           items: List.generate(7, (index) {
@@ -166,7 +165,7 @@ class _CalendarInputFormState extends State<CalendarInputForm> {
                         const Text(
                           'Days in Month:',
                           style: TextStyle(
-                            fontSize: 15,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -176,8 +175,8 @@ class _CalendarInputFormState extends State<CalendarInputForm> {
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 8,
+                              horizontal: 10,
+                              vertical: 10,
                             ),
                             hintText: 'Enter days (28-31)',
                           ),
@@ -208,8 +207,8 @@ class _CalendarInputFormState extends State<CalendarInputForm> {
                 ElevatedButton(
                   onPressed: _generateCalendar,
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    textStyle: const TextStyle(fontSize: 18),
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    textStyle: const TextStyle(fontSize: 20),
                   ),
                   child: const Text('Generate Calendar'),
                 ),

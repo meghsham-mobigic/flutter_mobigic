@@ -72,7 +72,7 @@ class _MaterialRootState extends State<MaterialRoot> {
         Locale('en'),
         Locale('mr'),
       ],
-
+      // home: const UpdateProduct(), 
       initialRoute: AppRoutes.splashScreen,
       onGenerateRoute: AppRoutes.generateRoutes,
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobigic/constants/app_colors.dart';
 import 'package:flutter_mobigic/jobs/components/jobs_gender_selector.dart';
 import 'package:flutter_mobigic/jobs/components/jobs_input_field.dart';
 import 'package:flutter_mobigic/jobs/components/jobs_job_dropdown.dart';
@@ -171,7 +172,7 @@ class _JobApplicationFormScreenState extends State<JobApplicationFormScreen> {
           ),
           if (_isLoading)
             const ColoredBox(
-              color: Colors.black,
+              color: AppColors.primary1,
               child: Center(child: CircularProgressIndicator()),
             ),
         ],
