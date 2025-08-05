@@ -7,5 +7,5 @@ abstract class DataService {
 
   Future<ResponseDTO> updateProduct(Map<String, dynamic> values);
 
-  Future<void> deleteProduct(int productId);
+  Future<ResponseDTO> deleteProduct(int productId);
 }

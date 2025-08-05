@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
+import 'package:flutter_mobigic/http_methods/helper/helper.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
@@ -12,20 +13,26 @@ class HttpCalls {
     String path,
     Map<String, String> headers,
   ) async {
-    debugPrint('getAll method called on $path with $headers');
+    // debugPrint('getAll() gets called in http_calls.dart');
+    // debugPrint('getAll method called on $path with $headers');
 
     http.Response httpResponse = await http.get(
       Uri.parse(path),
       headers: headers,
     );
+
     ResponseDTO responseDTO = ResponseDTO();
 
-    if (httpResponse.statusCode == 200 || httpResponse.statusCode == 201) {
-      responseDTO
-        ..responseData = httpResponse.body
-        ..statusData = httpResponse.statusCode.toString();
+    int statusCode = httpResponse.statusCode;
+    // debugPrint(' http_calls.dart=>${statusCode.runtimeType}');
+    if (statusCode == 200 || statusCode == 201) {
+      responseDTO.responseData = httpResponse.body;
+    } else {
+      responseDTO.statusData = httpResponse.statusCode.toString();
     }
     return responseDTO;
+
+    // return Helper.responseDTOConverter(httpResponse);
   }
 
   static Future<ResponseDTO> create(
@@ -39,14 +46,7 @@ class HttpCalls {
       body: jsonEncode(jsonMap),
     );
 
-    ResponseDTO responseDTO = ResponseDTO();
-
-    if (httpResponse.statusCode == 200 || httpResponse.statusCode == 201) {
-      responseDTO
-        ..responseData = httpResponse.body
-        ..statusData = httpResponse.statusCode.toString();
-    }
-    return responseDTO;
+    return Helper.responseDTOConverter(httpResponse);
   }
 
   // Method to update existing resource
@@ -61,19 +61,11 @@ class HttpCalls {
       headers: headers,
       body: jsonEncode(jsonMap),
     );
-
-    ResponseDTO responseDTO = ResponseDTO();
-
-    if (httpResponse.statusCode == 200 || httpResponse.statusCode == 201) {
-      responseDTO.responseData = httpResponse.body;
-    } else {
-      responseDTO.statusData = httpResponse.statusCode.toString();
-    }
-    return responseDTO;
+    return Helper.responseDTOConverter(httpResponse);
   }
 
   // Method to delete resource
-  static Future<http.Response> delete(
+  static Future<ResponseDTO> delete(
     String path,
     Map<String, String> headers,
     dynamic identifier,
@@ -81,10 +73,11 @@ class HttpCalls {
     debugPrint(
       'deleter method called on $path/$identifier with $headers ',
     );
-    return http.get(
+    http.Response httpResponse = await http.get(
       Uri.parse('$path/$identifier'),
       headers: headers,
     );
+    return Helper.responseDTOConverter(httpResponse);
   }
 
   static Future<ResponseDTO> postForImage(
@@ -139,19 +132,4 @@ class HttpCalls {
       );
     }
   }
-
-  // static Future<http.Response> put(
-  //   String path,
-  //   Map<String, String> headers,
-  //   Map<String, dynamic> jsonMap,
-  // ) async {
-  //   debugPrint(
-  //     'update method called on $path with $jsonMap and $headers ',
-  //   );
-  //   return http.put(
-  //     Uri.parse(path),
-  //     headers: headers,
-  //     body: jsonEncode(jsonMap),
-  //   );
-  // }
 }

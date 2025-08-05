@@ -5,13 +5,15 @@ class InputBox extends StatelessWidget {
   final TextEditingController controller;
   final bool isRequired;
   final bool isNumber;
+  final bool isDisabled;
 
   const InputBox({
     Key? key,
     required this.label,
     required this.controller,
-    this.isNumber=false,
+    this.isNumber = false,
     this.isRequired = false,
+    this.isDisabled = false,
   }) : super(key: key);
 
   @override
@@ -24,12 +26,11 @@ class InputBox extends StatelessWidget {
         margin: const EdgeInsets.all(5),
         child: TextField(
           controller: controller,
-          keyboardType: isNumber?TextInputType.number:TextInputType.text,
+          keyboardType: isNumber ? TextInputType.number : TextInputType.text,
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
             label: Text(displayLabel),
           ),
-
         ),
       ),
     );

@@ -112,8 +112,7 @@ class _CreateProductState extends State<CreateProduct> {
 
     ResponseDTO responseDTO = await service.createProduct(values);
 
-    if (int.parse(responseDTO.statusData) == 200 ||
-        int.parse(responseDTO.statusData) == 201) {
+    if (responseDTO.responseData != null) {
       final decodedProduct =
           jsonDecode(responseDTO.responseData.toString())
               as Map<String, dynamic>;

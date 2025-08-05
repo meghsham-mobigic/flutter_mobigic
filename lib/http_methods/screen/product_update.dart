@@ -51,6 +51,7 @@ class _UpdateProductState extends State<UpdateProduct> {
               controller: idController,
               isRequired: true,
               isNumber: true,
+              isDisabled: true,
             ),
             InputBox(
               label: 'Title',

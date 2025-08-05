@@ -20,12 +20,11 @@ class _ProductDashboard extends State<ProductDashboard> {
   final DataService service = locator.get<DataService>();
 
   Future<List<ProductModel>> getAllProductsDetails() async {
+    // debugPrint('getAllProductsDetails() gets called in product_dashboard');
     ResponseDTO responseDTO = await service.readAllProduct();
 
     final List<ProductModel> products;
-
-    if (int.parse(responseDTO.statusData) == 201 ||
-        int.parse(responseDTO.statusData) == 200) {
+    if (responseDTO.responseData != null) {
       final decodedList =
           jsonDecode(responseDTO.responseData.toString()) as List<dynamic>;
 
@@ -85,7 +84,7 @@ class _ProductDashboard extends State<ProductDashboard> {
                         product.image,
                         height: 80,
                         width: 80,
-                        fit: BoxFit.fitHeight,
+                        fit: BoxFit.fill,
                       ),
                       const SizedBox(width: 10),
                       Expanded(

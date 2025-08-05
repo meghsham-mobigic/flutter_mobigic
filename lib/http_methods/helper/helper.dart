@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 
 class Helper {
   static logger(String text) {
@@ -30,5 +32,18 @@ class Helper {
     } else {
       return 'Unknown Error';
     }
+  }
+
+  static ResponseDTO responseDTOConverter(http.Response httpResponse) {
+    ResponseDTO responseDTO = ResponseDTO();
+
+    debugPrint(httpResponse.statusCode.runtimeType.toString());
+
+    if (httpResponse.statusCode == 200 || httpResponse.statusCode == 201) {
+      responseDTO.responseData = httpResponse.body;
+    } else {
+      responseDTO.statusData = httpResponse.statusCode.toString();
+    }
+    return responseDTO;
   }
 }

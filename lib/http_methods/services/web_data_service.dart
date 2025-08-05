@@ -1,6 +1,5 @@
 import 'package:flutter_mobigic/constants/app_string_constants.dart';
 import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
-import 'package:flutter_mobigic/http_methods/helper/helper.dart';
 import 'package:flutter_mobigic/http_methods/services/data_service.dart';
 import 'package:flutter_mobigic/http_methods/services/http_calls.dart';
 
@@ -23,6 +22,8 @@ class WebDataService implements DataService {
   // Method to collect all product from api endpoint -> working
   @override
   Future<ResponseDTO> readAllProduct() async {
+    // debugPrint('readAllProduct() gets called in web_data_service.dart');
+
     return HttpCalls.getAll(
       ApiConstants.fakeProductBasePath,
       headers,
@@ -40,21 +41,11 @@ class WebDataService implements DataService {
   }
 
   @override
-  Future<void> deleteProduct(int id) async {
-    final response = await HttpCalls.delete(
+  Future<ResponseDTO> deleteProduct(int id) async {
+    return HttpCalls.delete(
       ApiConstants.fakeProductBasePath,
       headers,
       id,
     );
-
-    if (response.statusCode == 200) {
-      Helper.logger('Product Deleted');
-      await Helper.toast('Product Deleted');
-    } else {
-      throw Exception(
-        'Failed to delete product. Status code: ${response.statusCode}',
-      );
-    }
-    return;
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobigic/constants/app_colors.dart';
 import 'package:flutter_mobigic/http_methods/Model/product_model.dart';
+import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
+import 'package:flutter_mobigic/http_methods/helper/helper.dart';
 import 'package:flutter_mobigic/http_methods/screen/product_update.dart';
 import 'package:flutter_mobigic/http_methods/services/data_service.dart';
 import 'package:flutter_mobigic/http_methods/services/web_data_service.dart';
@@ -87,8 +89,7 @@ class ProductDetailScreen extends StatelessWidget {
 
                 ElevatedButton(
                   onPressed: () async => {
-                    await service.deleteProduct(product.id),
-                    Navigator.pop(context),
+                    onDelete(product.id, context),
                   },
                   child: const Text('Delete'),
                 ),
@@ -98,5 +99,15 @@ class ProductDetailScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  onDelete(int id, BuildContext context) async {
+    ResponseDTO responseDTO = await service.deleteProduct(product.id);
+    if (responseDTO.responseData != null) {
+      await Helper.toast('Product Id $id is deleted');
+      Navigator.pop(context);
+    } else {
+      await Helper.toast('Product Id $id is not deleted');
+    }
   }
 }
