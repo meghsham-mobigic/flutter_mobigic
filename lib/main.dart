@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobigic/l10n/app_localizations.dart';
 import 'package:flutter_mobigic/l10n/utility/local_manager.dart';
+import 'package:flutter_mobigic/locator.dart';
 import 'package:flutter_mobigic/routes/app_routes.dart';
 import 'package:flutter_mobigic/theme_manager/theme_config.dart';
 import 'package:flutter_mobigic/theme_manager/theme_manager.dart';
@@ -21,6 +22,7 @@ void main() async {
       await getApplicationDocumentsDirectory(); // function in path_provider.dart
   Hive.init(dir.path);
   await Hive.openBox<String>('HiveBox');
+  setupServiceLocator();
   runApp(const MaterialRoot());
 }
 

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_mobigic/constants/app_string_constants.dart';
-import 'package:flutter_mobigic/http_methods/Model/product_model.dart';
+import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:flutter_mobigic/http_methods/helper/helper.dart';
 import 'package:flutter_mobigic/http_methods/services/data_service.dart';
 import 'package:flutter_mobigic/http_methods/services/http_calls.dart';
@@ -35,25 +35,11 @@ class WebDataService implements DataService {
 
   // Method to collect all product from api endpoint -> working
   @override
-  Future<List<ProductModel>> realAllProduct() async {
-    final response = await HttpCalls.getAll(
+  Future<ResponseDTO> readAllProduct() async {
+    return HttpCalls.getAll(
       ApiConstants.fakeProductBasePath,
       headers,
     );
-
-    if (response.statusCode == 200) {
-      final decodedList = jsonDecode(response.body) as List<dynamic>;
-
-      final List<ProductModel> products = decodedList
-          .map((item) => ProductModel.fromJson(item as Map<String, dynamic>))
-          .toList();
-
-      return products;
-    } else {
-      throw Exception(
-        'Failed to load products. Status code: ${response.statusCode}',
-      );
-    }
   }
 
   @override

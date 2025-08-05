@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_mobigic/constants/app_colors.dart';
 import 'package:flutter_mobigic/http_methods/Model/product_model.dart';
+import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
+import 'package:flutter_mobigic/http_methods/helper/helper.dart';
 import 'package:flutter_mobigic/http_methods/screen/product_details.dart';
 import 'package:flutter_mobigic/http_methods/services/data_service.dart';
-import 'package:flutter_mobigic/http_methods/services/web_data_service.dart';
+import 'package:flutter_mobigic/locator.dart';
 import 'package:flutter_mobigic/routes/app_routes.dart';
 
 class ProductDashboard extends StatefulWidget {
@@ -14,10 +17,26 @@ class ProductDashboard extends StatefulWidget {
 }
 
 class _ProductDashboard extends State<ProductDashboard> {
-  final DataService service = WebDataService();
+  final DataService service = locator.get<DataService>();
 
   Future<List<ProductModel>> getAllProductsDetails() async {
-    return service.realAllProduct();
+    ResponseDTO responseDTO = await service.readAllProduct();
+
+    final List<ProductModel> products;
+
+    if (int.parse(responseDTO.errorData) == 201 ||
+        int.parse(responseDTO.errorData) == 200) {
+      final decodedList =
+          jsonDecode(responseDTO.responseData.toString()) as List<dynamic>;
+
+      return decodedList
+          .map((item) => ProductModel.fromJson(item as Map<String, dynamic>))
+          .toList();
+    } else {
+      throw Exception(
+        'Failed to load products. Status code: ${Helper.statusCodeData(int.parse(responseDTO.errorData))}',
+      );
+    }
   }
 
   @override
@@ -41,6 +60,7 @@ class _ProductDashboard extends State<ProductDashboard> {
       ),
       body: FutureBuilder<List<ProductModel>>(
         future: getAllProductsDetails(),
+        // when the list is called it call getAllProductsDetails() to get list data
         builder: (context, productsData) {
           if (productsData.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -53,7 +73,7 @@ class _ProductDashboard extends State<ProductDashboard> {
             itemBuilder: (context, index) {
               final product = productsData.data![index];
               //ProductModel product = productsData.data![index];
-              
+
               return Card(
                 elevation: 10,
                 margin: const EdgeInsets.all(10),

@@ -2,36 +2,30 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_mobigic/http_methods/Model/http_call_response.dart';
+import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
 
 class HttpCalls {
-  // Method to make get call for all resources
-  static Future<http.Response> getAll(
+  static Future<ResponseDTO> getAll(
     String path,
     Map<String, String> headers,
   ) async {
     debugPrint('getAll method called on $path with $headers');
-    return http.get(Uri.parse(path), headers: headers);
-  }
 
-  // Method to make get call for all resources
-  static Future<HttpCallResponse> getAllResponseData(
-    String path,
-    Map<String, String> headers,
-  ) async {
-    debugPrint('getAll method called on $path with $headers');
-    http.Response response = await http.get(Uri.parse(path), headers: headers);
+    http.Response httpResponse = await http.get(
+      Uri.parse(path),
+      headers: headers,
+    );
+    ResponseDTO responseDTO = ResponseDTO();
 
-    HttpCallResponse httpCallResponse = HttpCallResponse();
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      httpCallResponse.responseData = response.body;
-    } else {
-      httpCallResponse.errorData = response.statusCode.toString();
+    if (httpResponse.statusCode == 200 || httpResponse.statusCode == 201) {
+      responseDTO
+        ..responseData = httpResponse.body
+        ..errorData = httpResponse.statusCode.toString();
     }
-    return httpCallResponse;
+    return responseDTO;
   }
 
   static Future<http.Response> create(
@@ -82,7 +76,7 @@ class HttpCalls {
     );
   }
 
-  static Future<HttpCallResponse> postForImage(
+  static Future<ResponseDTO> postForImage(
     String url, {
     dynamic data,
     Uint8List? fileBytes,
@@ -123,12 +117,12 @@ class HttpCalls {
     }
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return HttpCallResponse(
+      return ResponseDTO(
         responseData: jsonDecode(response.body),
         errorData: '',
       );
     } else {
-      return HttpCallResponse(
+      return ResponseDTO(
         responseData: null,
         errorData: 'Failed with status: ${response.statusCode}',
       );
