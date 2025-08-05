@@ -24,8 +24,8 @@ class _ProductDashboard extends State<ProductDashboard> {
 
     final List<ProductModel> products;
 
-    if (int.parse(responseDTO.errorData) == 201 ||
-        int.parse(responseDTO.errorData) == 200) {
+    if (int.parse(responseDTO.statusData) == 201 ||
+        int.parse(responseDTO.statusData) == 200) {
       final decodedList =
           jsonDecode(responseDTO.responseData.toString()) as List<dynamic>;
 
@@ -34,7 +34,7 @@ class _ProductDashboard extends State<ProductDashboard> {
           .toList();
     } else {
       throw Exception(
-        'Failed to load products. Status code: ${Helper.statusCodeData(int.parse(responseDTO.errorData))}',
+        'Failed to load products. Status code: ${Helper.statusCodeData(int.parse(responseDTO.statusData))}',
       );
     }
   }

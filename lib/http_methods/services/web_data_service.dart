@@ -5,7 +5,6 @@ import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:flutter_mobigic/http_methods/helper/helper.dart';
 import 'package:flutter_mobigic/http_methods/services/data_service.dart';
 import 'package:flutter_mobigic/http_methods/services/http_calls.dart';
-import 'package:http/http.dart' as http;
 
 class WebDataService implements DataService {
   Map<String, String> headers = {
@@ -15,22 +14,12 @@ class WebDataService implements DataService {
   HttpCalls caller = HttpCalls();
 
   @override
-  Future<http.Response> createProduct(Map<String, dynamic> values) async {
-    final response = await HttpCalls.create(
+  Future<ResponseDTO> createProduct(Map<String, dynamic> values) async {
+    return await HttpCalls.create(
       ApiConstants.fakeProductBasePath,
       headers,
       values,
     );
-
-    if (response.statusCode == 200) {
-      final decodedProduct = jsonDecode(response.body) as Map<String, dynamic>;
-      await Helper.toast('Product Created');
-      return response;
-    } else {
-      throw Exception(
-        'Failed to create product. Status code: ${response.statusCode}',
-      );
-    }
   }
 
   // Method to collect all product from api endpoint -> working
@@ -43,7 +32,8 @@ class WebDataService implements DataService {
   }
 
   @override
-  Future<http.Response> updateProduct(Map<String, dynamic> values) async {
+  Future<ResponseDTO> updateProduct(Map<String, dynamic> values) async {
+    // http.Response
     final response = await HttpCalls.update(
       ApiConstants.fakeProductBasePath,
       int.parse(values['id'].toString()),

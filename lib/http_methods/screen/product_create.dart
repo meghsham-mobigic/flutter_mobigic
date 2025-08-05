@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:flutter_mobigic/http_methods/helper/helper.dart';
 import 'package:flutter_mobigic/http_methods/screen/InputBox.dart';
 import 'package:flutter_mobigic/http_methods/services/data_service.dart';
@@ -36,10 +39,10 @@ class _CreateProductState extends State<CreateProduct> {
             children: [
               const Text('Create Product Form '),
               InputBox(
-                  label: 'ID',
-                  controller: idController,
-                  isRequired: true,
-                  isNumber: true
+                label: 'ID',
+                controller: idController,
+                isRequired: true,
+                isNumber: true,
               ),
               InputBox(
                 label: 'Title',
@@ -66,9 +69,10 @@ class _CreateProductState extends State<CreateProduct> {
 
               ElevatedButton(
                 onPressed: () async {
-                  Map<String, dynamic> values = onSubmit();
+                  Map<String, dynamic> values = await onSubmit();
                   await service.createProduct(values);
-                  Navigator.pop(context);Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
                 },
                 child: const Text('Submit'),
               ),
@@ -90,7 +94,7 @@ class _CreateProductState extends State<CreateProduct> {
     super.dispose();
   }
 
-  Map<String, dynamic> onSubmit() {
+  Future<Map<String, dynamic>> onSubmit() async {
     Map<String, dynamic> values = {};
     if (idController.text.isEmpty || categoryController.text.isEmpty) {
       Helper.toast('ID & Category Required');
@@ -105,6 +109,20 @@ class _CreateProductState extends State<CreateProduct> {
     });
 
     // debugPrint(values.toString());
-    return values;
+
+    ResponseDTO responseDTO = await service.createProduct(values);
+
+    if (int.parse(responseDTO.statusData) == 200 ||
+        int.parse(responseDTO.statusData) == 201) {
+      final decodedProduct =
+          jsonDecode(responseDTO.responseData.toString())
+              as Map<String, dynamic>;
+      await Helper.toast('Product Created');
+      return decodedProduct;
+    } else {
+      throw Exception(
+        'Failed to create product. Status code: ${Helper.statusCodeData(int.parse(responseDTO.statusData))}',
+      );
+    }
   }
 }

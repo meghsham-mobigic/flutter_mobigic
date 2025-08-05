@@ -1,8 +1,8 @@
 class ResponseDTO {
-  ResponseDTO({this.responseData = '', this.errorData = ''});
+  ResponseDTO({this.responseData = '', this.statusData = ''});
 
   dynamic responseData;
-  String errorData;
+  String statusData;
   //
   // dynamic get getResponseData => responseData;
   // dynamic get getErrorData => errorData;

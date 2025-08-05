@@ -23,21 +23,30 @@ class HttpCalls {
     if (httpResponse.statusCode == 200 || httpResponse.statusCode == 201) {
       responseDTO
         ..responseData = httpResponse.body
-        ..errorData = httpResponse.statusCode.toString();
+        ..statusData = httpResponse.statusCode.toString();
     }
     return responseDTO;
   }
 
-  static Future<http.Response> create(
+  static Future<ResponseDTO> create(
     String path,
     Map<String, String> headers,
     Map<String, dynamic> jsonMap,
   ) async {
-    return http.post(
+    http.Response httpResponse = await http.post(
       Uri.parse(path),
       headers: headers,
       body: jsonEncode(jsonMap),
     );
+
+    ResponseDTO responseDTO = ResponseDTO();
+
+    if (httpResponse.statusCode == 200 || httpResponse.statusCode == 201) {
+      responseDTO
+        ..responseData = httpResponse.body
+        ..statusData = httpResponse.statusCode.toString();
+    }
+    return responseDTO;
   }
 
   // Method to update existing resource
@@ -119,12 +128,12 @@ class HttpCalls {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return ResponseDTO(
         responseData: jsonDecode(response.body),
-        errorData: '',
+        statusData: '',
       );
     } else {
       return ResponseDTO(
         responseData: null,
-        errorData: 'Failed with status: ${response.statusCode}',
+        statusData: 'Failed with status: ${response.statusCode}',
       );
     }
   }
