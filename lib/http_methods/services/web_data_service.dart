@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter_mobigic/constants/app_string_constants.dart';
 import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:flutter_mobigic/http_methods/helper/helper.dart';
@@ -33,22 +31,12 @@ class WebDataService implements DataService {
 
   @override
   Future<ResponseDTO> updateProduct(Map<String, dynamic> values) async {
-    // http.Response
-    final response = await HttpCalls.update(
+    return HttpCalls.update(
       ApiConstants.fakeProductBasePath,
       int.parse(values['id'].toString()),
       headers,
       values,
     );
-
-    if (response.statusCode == 200) {
-      final decodedProduct = jsonDecode(response.body) as Map<String, dynamic>;
-      return response;
-    } else {
-      throw Exception(
-        'Failed to updated product. Status code: ${response.statusCode}',
-      );
-    }
   }
 
   @override

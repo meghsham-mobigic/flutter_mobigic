@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobigic/http_methods/Model/product_model.dart';
+import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:flutter_mobigic/http_methods/helper/helper.dart';
 import 'package:flutter_mobigic/http_methods/screen/InputBox.dart';
 import 'package:flutter_mobigic/http_methods/services/data_service.dart';
@@ -45,12 +46,11 @@ class _UpdateProductState extends State<UpdateProduct> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
             InputBox(
-                label: 'ID',
-                controller: idController,
-                isRequired: true,
-                isNumber: true
+              label: 'ID',
+              controller: idController,
+              isRequired: true,
+              isNumber: true,
             ),
             InputBox(
               label: 'Title',
@@ -60,35 +60,23 @@ class _UpdateProductState extends State<UpdateProduct> {
               label: 'Price',
               controller: priceController,
               isNumber: true,
-
             ),
             InputBox(
-                label: 'Description',
-                controller: descriptionController,
+              label: 'Description',
+              controller: descriptionController,
             ),
             InputBox(
-                label: 'Image',
-                controller: imageController,
+              label: 'Image',
+              controller: imageController,
             ),
             InputBox(
-                label: 'Category',
-                controller: categoryController,
-                isRequired: true,
+              label: 'Category',
+              controller: categoryController,
+              isRequired: true,
             ),
             ElevatedButton(
               onPressed: () async {
-                Map<String, dynamic> values = onUpdate()
-                  ..addAll({
-                    'id': int.parse(idController.text.trim()),
-                    'title': titleController.text.trim(),
-                    'price': double.parse(priceController.text.trim()),
-                    'description': descriptionController.text.trim(),
-                    'image': imageController.text.trim(),
-                    'category': categoryController.text.trim(),
-                  });
-                await service.updateProduct(values);
-                await Helper.toast('Updated Product');
-                Navigator.pop(context);
+                await onUpdate();
               },
               child: const Text('Update'),
             ),
@@ -109,11 +97,13 @@ class _UpdateProductState extends State<UpdateProduct> {
     super.dispose();
   }
 
-  Map<String, dynamic> onUpdate() {
+  Future<void> onUpdate() async {
     Map<String, dynamic> values = {};
+
     if (idController.text.isEmpty || categoryController.text.isEmpty) {
-      Helper.toast('ID & Category Required');
+      await Helper.toast('ID & Category Required');
     }
+
     values.addAll({
       'id': idController.text.trim(),
       'title': titleController.text.trim(),
@@ -123,6 +113,17 @@ class _UpdateProductState extends State<UpdateProduct> {
       'category': categoryController.text.trim(),
     });
 
-    return values;
+    ResponseDTO responseDTO = await service.updateProduct(values);
+
+    if (responseDTO.responseData != null) {
+      await Helper.toast('Updated Product');
+      Navigator.pop(context);
+      return;
+    } else {
+      await Helper.toast(
+        'Updated Product '
+        '${Helper.statusCodeData(int.parse(responseDTO.statusData))}',
+      );
+    }
   }
 }

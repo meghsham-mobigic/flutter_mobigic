@@ -50,24 +50,26 @@ class HttpCalls {
   }
 
   // Method to update existing resource
-  static Future<http.Response> update(
+  static Future<ResponseDTO> update(
     String path,
     int id,
     Map<String, String> headers,
     Map<String, dynamic> jsonMap,
   ) async {
-    final fullPath = '$path/$id';
-    debugPrint(
-      'update method called on $fullPath with $jsonMap and $headers',
-    );
-
-    final response = await http.put(
-      Uri.parse(fullPath),
+    http.Response httpResponse = await http.put(
+      Uri.parse('$path/$id'),
       headers: headers,
       body: jsonEncode(jsonMap),
     );
 
-    return response;
+    ResponseDTO responseDTO = ResponseDTO();
+
+    if (httpResponse.statusCode == 200 || httpResponse.statusCode == 201) {
+      responseDTO.responseData = httpResponse.body;
+    } else {
+      responseDTO.statusData = httpResponse.statusCode.toString();
+    }
+    return responseDTO;
   }
 
   // Method to delete resource
