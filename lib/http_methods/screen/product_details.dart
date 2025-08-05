@@ -5,12 +5,12 @@ import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:flutter_mobigic/http_methods/helper/helper.dart';
 import 'package:flutter_mobigic/http_methods/screen/product_update.dart';
 import 'package:flutter_mobigic/http_methods/services/data_service.dart';
-import 'package:flutter_mobigic/http_methods/services/web_data_service.dart';
+import 'package:flutter_mobigic/locator.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   ProductDetailScreen({required this.product, super.key});
   final ProductModel product;
-  final DataService service = WebDataService();
+  final DataService service = locator.get<DataService>();
 
   @override
   Widget build(BuildContext context) {
