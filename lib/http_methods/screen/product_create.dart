@@ -5,7 +5,7 @@ import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:flutter_mobigic/http_methods/helper/helper.dart';
 import 'package:flutter_mobigic/http_methods/screen/InputBox.dart';
 import 'package:flutter_mobigic/http_methods/services/data_service.dart';
-import 'package:flutter_mobigic/http_methods/services/web_data_service.dart';
+import 'package:flutter_mobigic/locator.dart';
 
 class CreateProduct extends StatefulWidget {
   CreateProduct({super.key});
@@ -15,7 +15,7 @@ class CreateProduct extends StatefulWidget {
 }
 
 class _CreateProductState extends State<CreateProduct> {
-  DataService service = WebDataService();
+  final DataService service = locator.get<DataService>();
   TextEditingController idController = TextEditingController();
   TextEditingController titleController = TextEditingController();
   TextEditingController priceController = TextEditingController();

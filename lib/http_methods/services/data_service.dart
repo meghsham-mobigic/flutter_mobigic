@@ -1,7 +1,16 @@
+import 'dart:typed_data';
+
 import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 
 abstract class DataService {
   Future<ResponseDTO> createProduct(Map<String, dynamic> values);
+
+  Future<ResponseDTO> multiPartFileUpload(
+    String url, {
+    dynamic data,
+    Uint8List? fileBytes,
+    String? fileName,
+  });
 
   Future<ResponseDTO> readAllProduct();
 

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter_mobigic/constants/app_string_constants.dart';
 import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:flutter_mobigic/http_methods/services/data_service.dart';
@@ -55,6 +57,21 @@ class WebDataService implements DataService {
       ApiConstants.fakeProductBasePath,
       headers,
       id,
+    );
+  }
+
+  @override
+  Future<ResponseDTO> multiPartFileUpload(
+    String url, {
+    dynamic data,
+    Uint8List? fileBytes,
+    String? fileName,
+  }) {
+    return HttpCalls.multipartFileUploader(
+      url,
+      data: data,
+      fileBytes: fileBytes,
+      fileName: fileName,
     );
   }
 }

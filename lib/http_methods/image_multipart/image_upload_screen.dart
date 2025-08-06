@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobigic/constants/app_string_constants.dart';
 import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:flutter_mobigic/http_methods/helper/helper.dart';
+import 'package:flutter_mobigic/http_methods/services/data_service.dart';
 import 'package:flutter_mobigic/http_methods/services/http_calls.dart';
+import 'package:flutter_mobigic/locator.dart';
 
 class FileUploaderHome extends StatefulWidget {
   const FileUploaderHome({super.key});
@@ -16,6 +18,7 @@ class _FileUploaderHomeState extends State<FileUploaderHome> {
   bool isSelected = false;
   bool isLoading = false;
   PlatformFile? selectedFile;
+  final DataService service = locator.get<DataService>();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,6 @@ class _FileUploaderHomeState extends State<FileUploaderHome> {
                       padding: const EdgeInsets.all(10),
                       child: Card(
                         margin: const EdgeInsets.all(10),
-
                         child: Padding(
                           padding: const EdgeInsets.all(25),
                           child: Column(
@@ -124,8 +126,7 @@ class _FileUploaderHomeState extends State<FileUploaderHome> {
         backToUpload();
       }
     } else {
-      Helper.snackBar(context, 'Upload failed: ${response.error}');
-      // await Helper.toast();
+      await Helper.snackBar(context, 'Upload failed: ${response.error}');
       backToUpload();
     }
   }
