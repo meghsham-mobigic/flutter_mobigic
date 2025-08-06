@@ -80,7 +80,7 @@ class HttpCalls {
     return Helper.responseDTOConverter(httpResponse);
   }
 
-  static Future<ResponseDTO> postForImage(
+  static Future<ResponseDTO> multipartFileUploader(
     String url, {
     dynamic data,
     Uint8List? fileBytes,
@@ -90,6 +90,7 @@ class HttpCalls {
 
     if (fileBytes != null && fileName != null) {
       String? mimeType = lookupMimeType(fileName);
+      print(mimeType?.length.toString());
       MediaType? mediaType = mimeType != null
           ? MediaType.parse(mimeType)
           : null;

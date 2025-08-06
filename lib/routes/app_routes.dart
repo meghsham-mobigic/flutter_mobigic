@@ -70,7 +70,7 @@ class AppRoutes {
       case hiveDB:
         return MaterialPageRoute(builder: (_) => const HiveDBAppRoot());
       case imageUploader:
-        return MaterialPageRoute(builder: (_) => const ImageUploaderHome());
+        return MaterialPageRoute(builder: (_) => const FileUploaderHome());
       case httpMethod:
         return MaterialPageRoute(builder: (_) => const ProductDashboard());
       case editProduct:

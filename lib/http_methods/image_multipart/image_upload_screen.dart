@@ -1,17 +1,18 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobigic/constants/app_string_constants.dart';
+import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:flutter_mobigic/http_methods/helper/helper.dart';
 import 'package:flutter_mobigic/http_methods/services/http_calls.dart';
 
-class ImageUploaderHome extends StatefulWidget {
-  const ImageUploaderHome({super.key});
+class FileUploaderHome extends StatefulWidget {
+  const FileUploaderHome({super.key});
 
   @override
-  State<ImageUploaderHome> createState() => _ImageUploaderHomeState();
+  State<FileUploaderHome> createState() => _FileUploaderHomeState();
 }
 
-class _ImageUploaderHomeState extends State<ImageUploaderHome> {
+class _FileUploaderHomeState extends State<FileUploaderHome> {
   bool isSelected = false;
   bool isLoading = false;
   PlatformFile? selectedFile;
@@ -83,12 +84,11 @@ class _ImageUploaderHomeState extends State<ImageUploaderHome> {
   Future<void> pickFiles() async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.image,
         withData: true,
       );
 
       if (result == null || result.files.isEmpty) {
-        debugPrint('no files picked');
+        await Helper.snackBar(context, 'No Files picked');
         return;
       }
 
@@ -110,7 +110,7 @@ class _ImageUploaderHomeState extends State<ImageUploaderHome> {
 
     setState(() => isLoading = true);
 
-    final response = await HttpCalls.postForImage(
+    ResponseDTO response = await HttpCalls.multipartFileUploader(
       ApiConstants.fakeImageUploadPath,
       fileBytes: selectedFile!.bytes,
       fileName: selectedFile!.name,
@@ -120,8 +120,19 @@ class _ImageUploaderHomeState extends State<ImageUploaderHome> {
 
     if (response.responseData != null) {
       await Helper.snackBar(context, 'Upload successful');
+      if (response.responseData.toString().isNotEmpty) {
+        backToUpload();
+      }
     } else {
-      await Helper.toast('Upload failed: ${response.error}');
+      Helper.snackBar(context, 'Upload failed: ${response.error}');
+      // await Helper.toast();
+      backToUpload();
     }
+  }
+
+  void backToUpload() {
+    setState(() {
+      isSelected = false;
+    });
   }
 }
