@@ -21,18 +21,18 @@ class HttpCalls {
       headers: headers,
     );
 
-    ResponseDTO responseDTO = ResponseDTO();
+    // ResponseDTO responseDTO = ResponseDTO();
+    //
+    // int statusCode = httpResponse.statusCode;
+    // // debugPrint(' http_calls.dart=>${statusCode.runtimeType}');
+    // if (statusCode == 200 || statusCode == 201) {
+    //   responseDTO.responseData = httpResponse.body;
+    // } else {
+    //   responseDTO.statusData = httpResponse.statusCode.toString();
+    // }
+    // return responseDTO;
 
-    int statusCode = httpResponse.statusCode;
-    // debugPrint(' http_calls.dart=>${statusCode.runtimeType}');
-    if (statusCode == 200 || statusCode == 201) {
-      responseDTO.responseData = httpResponse.body;
-    } else {
-      responseDTO.statusData = httpResponse.statusCode.toString();
-    }
-    return responseDTO;
-
-    // return Helper.responseDTOConverter(httpResponse);
+    return Helper.responseDTOConverter(httpResponse);
   }
 
   static Future<ResponseDTO> create(
@@ -123,12 +123,12 @@ class HttpCalls {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return ResponseDTO(
         responseData: jsonDecode(response.body),
-        statusData: '',
+        error: '',
       );
     } else {
       return ResponseDTO(
         responseData: null,
-        statusData: 'Failed with status: ${response.statusCode}',
+        error: 'Failed with status: ${response.statusCode}',
       );
     }
   }

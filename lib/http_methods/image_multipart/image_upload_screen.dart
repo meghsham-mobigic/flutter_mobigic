@@ -121,7 +121,7 @@ class _ImageUploaderHomeState extends State<ImageUploaderHome> {
     if (response.responseData != null) {
       await Helper.snackBar(context, 'Upload successful');
     } else {
-      await Helper.toast('Upload failed: ${response.statusData}');
+      await Helper.toast('Upload failed: ${response.error}');
     }
   }
 }

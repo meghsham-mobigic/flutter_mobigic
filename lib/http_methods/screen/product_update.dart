@@ -123,7 +123,7 @@ class _UpdateProductState extends State<UpdateProduct> {
     } else {
       await Helper.toast(
         'Updated Product '
-        '${Helper.statusCodeData(int.parse(responseDTO.statusData))}',
+        '${Helper.statusCodeData(int.parse(responseDTO.error))}',
       );
     }
   }

@@ -42,7 +42,8 @@ class Helper {
     if (httpResponse.statusCode == 200 || httpResponse.statusCode == 201) {
       responseDTO.responseData = httpResponse.body;
     } else {
-      responseDTO.statusData = httpResponse.statusCode.toString();
+      debugPrint('Error : ${httpResponse.statusCode.toString()}');
+      responseDTO.error = httpResponse.statusCode.toString();
     }
     return responseDTO;
   }

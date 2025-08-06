@@ -120,7 +120,7 @@ class _CreateProductState extends State<CreateProduct> {
       return decodedProduct;
     } else {
       throw Exception(
-        'Failed to create product. Status code: ${Helper.statusCodeData(int.parse(responseDTO.statusData))}',
+        'Failed to create product. Status code: ${Helper.statusCodeData(int.parse(responseDTO.error))}',
       );
     }
   }

@@ -23,11 +23,20 @@ class WebDataService implements DataService {
   @override
   Future<ResponseDTO> readAllProduct() async {
     // debugPrint('readAllProduct() gets called in web_data_service.dart');
+    // ResponseDTO responseDTO =
 
     return HttpCalls.getAll(
       ApiConstants.fakeProductBasePath,
       headers,
     );
+
+    // if (responseDTO.responseData.toString().isEmpty) {
+    //   debugPrint('#####empty');
+    // } else {
+    //   debugPrint('####' + responseDTO.responseData.toString());
+    //   debugPrint('@@@@' + responseDTO.error.toString());
+    // }
+    //  responseDTO;
   }
 
   @override

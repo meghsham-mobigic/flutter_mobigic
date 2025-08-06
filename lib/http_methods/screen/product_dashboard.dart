@@ -24,7 +24,7 @@ class _ProductDashboard extends State<ProductDashboard> {
     ResponseDTO responseDTO = await service.readAllProduct();
 
     final List<ProductModel> products;
-    if (responseDTO.responseData != null) {
+    if (responseDTO.responseData.toString().isNotEmpty) {
       final decodedList =
           jsonDecode(responseDTO.responseData.toString()) as List<dynamic>;
 
@@ -33,7 +33,8 @@ class _ProductDashboard extends State<ProductDashboard> {
           .toList();
     } else {
       throw Exception(
-        'Failed to load products. Status code: ${Helper.statusCodeData(int.parse(responseDTO.statusData))}',
+        'Failed to load products. Status code: ${int.parse(responseDTO.error)} '
+        '(${Helper.statusCodeData(int.parse(responseDTO.error))})',
       );
     }
   }
@@ -64,15 +65,25 @@ class _ProductDashboard extends State<ProductDashboard> {
           if (productsData.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (productsData.hasError) {
-            return Center(child: Text('Error: ${productsData.error}'));
+            return Center(
+              child: Column(
+                children: [
+                  Text(
+                    '${productsData.error}',
+                  ),
+                  const Icon(
+                    Icons
+                        .error, // Make sure you are using the correct icon from the Icons class
+                    size: 100,
+                  ),
+                ],
+              ),
+            );
           }
-
           return ListView.builder(
             itemCount: productsData.data!.length,
             itemBuilder: (context, index) {
               final product = productsData.data![index];
-              //ProductModel product = productsData.data![index];
-
               return Card(
                 elevation: 10,
                 margin: const EdgeInsets.all(10),
@@ -110,7 +121,8 @@ class _ProductDashboard extends State<ProductDashboard> {
                                 ),
                                 const SizedBox(width: 5),
                                 Text(
-                                  '${product.rating}, Total RatingsCunt : (${product.ratingCount})',
+                                  '${product.rating}, Total RatingsCunt : '
+                                  '(${product.ratingCount})',
                                 ),
                               ],
                             ),
