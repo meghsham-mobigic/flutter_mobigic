@@ -3,8 +3,4 @@ class ResponseDTO {
 
   dynamic responseData;
   String error;
-
-  //
-  // dynamic get getResponseData => responseData;
-  // dynamic get getErrorData => errorData;
 }

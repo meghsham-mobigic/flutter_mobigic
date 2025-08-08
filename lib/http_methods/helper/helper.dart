@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class Helper {
   static logger(String text) {
-    print('LOG => $text');
+    debugPrint('LOG => $text');
   }
 
   static Future<void> toast(String text) async {
@@ -30,7 +30,7 @@ class Helper {
     } else if (statusCode >= 500 && statusCode < 600) {
       return 'Server Error';
     } else {
-      return 'Unknown Error';
+      return 'Unknown Status';
     }
   }
 
@@ -41,10 +41,13 @@ class Helper {
 
     if (httpResponse.statusCode == 200 || httpResponse.statusCode == 201) {
       responseDTO.responseData = httpResponse.body;
+      print('filled with data');
     } else {
-      debugPrint('Error : ${httpResponse.statusCode.toString()}');
       responseDTO.error = httpResponse.statusCode.toString();
+
+      print('filled with error');
     }
+
     return responseDTO;
   }
 }

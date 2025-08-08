@@ -4,7 +4,6 @@ import 'package:flutter_mobigic/constants/app_string_constants.dart';
 import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:flutter_mobigic/http_methods/helper/helper.dart';
 import 'package:flutter_mobigic/http_methods/services/data_service.dart';
-import 'package:flutter_mobigic/http_methods/services/http_calls.dart';
 import 'package:flutter_mobigic/locator.dart';
 
 class FileUploaderHome extends StatefulWidget {
@@ -112,7 +111,7 @@ class _FileUploaderHomeState extends State<FileUploaderHome> {
 
     setState(() => isLoading = true);
 
-    ResponseDTO response = await HttpCalls.multipartFileUploader(
+    ResponseDTO response = await service.multiPartFileUpload(
       ApiConstants.fakeImageUploadPath,
       fileBytes: selectedFile!.bytes,
       fileName: selectedFile!.name,

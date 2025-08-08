@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:flutter_mobigic/http_methods/helper/helper.dart';
 import 'package:http/http.dart' as http;
@@ -13,24 +12,10 @@ class HttpCalls {
     String path,
     Map<String, String> headers,
   ) async {
-    // debugPrint('getAll() gets called in http_calls.dart');
-    // debugPrint('getAll method called on $path with $headers');
-
     http.Response httpResponse = await http.get(
       Uri.parse(path),
       headers: headers,
     );
-
-    // ResponseDTO responseDTO = ResponseDTO();
-    //
-    // int statusCode = httpResponse.statusCode;
-    // // debugPrint(' http_calls.dart=>${statusCode.runtimeType}');
-    // if (statusCode == 200 || statusCode == 201) {
-    //   responseDTO.responseData = httpResponse.body;
-    // } else {
-    //   responseDTO.statusData = httpResponse.statusCode.toString();
-    // }
-    // return responseDTO;
 
     return Helper.responseDTOConverter(httpResponse);
   }
@@ -70,13 +55,11 @@ class HttpCalls {
     Map<String, String> headers,
     dynamic identifier,
   ) async {
-    debugPrint(
-      'deleter method called on $path/$identifier with $headers ',
-    );
     http.Response httpResponse = await http.get(
       Uri.parse('$path/$identifier'),
       headers: headers,
     );
+
     return Helper.responseDTOConverter(httpResponse);
   }
 
@@ -111,8 +94,8 @@ class HttpCalls {
         });
       }
 
-      var streamedResponse = await request.send();
-      response = await http.Response.fromStream(streamedResponse);
+      http.StreamedResponse streamedResponse = (await request.send());
+      response = await http.Response.fromStream(await streamedResponse);
     } else {
       response = await http.post(
         Uri.parse(url),
@@ -120,17 +103,6 @@ class HttpCalls {
         body: jsonEncode(data),
       );
     }
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return ResponseDTO(
-        responseData: jsonDecode(response.body),
-        error: '',
-      );
-    } else {
-      return ResponseDTO(
-        responseData: null,
-        error: 'Failed with status: ${response.statusCode}',
-      );
-    }
+    return Helper.responseDTOConverter(response);
   }
 }
