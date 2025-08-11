@@ -128,7 +128,7 @@ class ProductDetailScreen extends StatelessWidget {
     } else {
       await Helper.snackBar(
         context,
-        'Error : ${Helper.statusCodeData(responseDTO.error)} Product Not Deleted',
+        'Error : ${responseDTO.error} Product Not Deleted',
       );
     }
   }

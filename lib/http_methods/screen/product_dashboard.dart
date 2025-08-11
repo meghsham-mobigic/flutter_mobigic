@@ -86,8 +86,7 @@ class _ProductDashboard extends State<ProductDashboard> {
               child: Column(
                 children: [
                   Text(
-                    '${int.parse(responseDTO.error.toString())}'
-                    ': ${Helper.statusCodeData(responseDTO.error)}',
+                    '${responseDTO.error} ',
                   ),
                   const Icon(
                     Icons.error,

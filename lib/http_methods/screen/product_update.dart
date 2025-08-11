@@ -132,7 +132,7 @@ class _UpdateProductState extends State<UpdateProduct> {
     } else {
       await Helper.snackBar(
         context,
-        'Error : ${Helper.statusCodeData(responseDTO.error)} Product Not Updated',
+        'Error : ${responseDTO.error}  Product Not Updated',
       );
     }
   }

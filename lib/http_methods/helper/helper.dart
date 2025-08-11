@@ -21,17 +21,17 @@ class Helper {
   static String statusCodeData(String stringStatusCode) {
     int statusCode = int.parse(stringStatusCode);
     if (statusCode >= 100 && statusCode < 200) {
-      return 'Informational';
+      return '$stringStatusCode : Informational';
     } else if (statusCode >= 200 && statusCode < 300) {
-      return 'Request Successful';
+      return '$stringStatusCode : Request Successful';
     } else if (statusCode >= 300 && statusCode < 400) {
-      return 'Request Redirection';
+      return '$stringStatusCode : Request Redirection';
     } else if (statusCode >= 400 && statusCode < 500) {
-      return 'Client Error';
+      return '$stringStatusCode : Client Error';
     } else if (statusCode >= 500 && statusCode < 600) {
-      return 'Server Error';
+      return '$stringStatusCode : Server Error';
     } else {
-      return 'Unknown Status';
+      return '$stringStatusCode : Unknown Status';
     }
   }
 
@@ -41,8 +41,9 @@ class Helper {
       responseDTO.responseData = httpResponse.body;
       debugPrint('filled with data=>>${responseDTO.responseData}');
     } else {
-      responseDTO.error = httpResponse.statusCode.toString();
-      debugPrint('filled with error=>>${responseDTO.error}');
+      responseDTO.error = Helper.statusCodeData(
+        httpResponse.statusCode.toString(),
+      );
     }
     return responseDTO;
   }

@@ -8,7 +8,8 @@ class StringConstants {
 }
 
 class ApiConstants {
-  static const String fakeProductBasePath = 'https://fakestoreapi.com/produts';
+  static const String fakeProductBasePath = 'https://fakestoreapi.com/prducts';
+
   static const String fakeImageUploadPath =
       'https://api.escuelajs.co/api/v1/files/upload';
 }
