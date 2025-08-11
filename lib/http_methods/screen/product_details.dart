@@ -14,6 +14,23 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Example: treating id == 0 as default product
+    if (product.id == 0) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Error')),
+        body: const Center(
+          child: Column(
+            children: [
+              Icon(
+                Icons.error,
+                size: 100,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(product.title),
@@ -32,37 +49,28 @@ class ProductDetailScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-
             Text(
               product.title,
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-
             const SizedBox(height: 10),
-
             Text(
               '\$${product.price.toStringAsFixed(2)}',
               style: const TextStyle(fontSize: 20, color: Colors.green),
             ),
-
             const SizedBox(height: 10),
-
             Text(
               'Category: ${product.category}',
               style: const TextStyle(color: Colors.grey),
             ),
-
             const SizedBox(height: 10),
-
             const Text(
               'Description:',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             const SizedBox(height: 5),
             Text(product.description),
-
             const SizedBox(height: 15),
-
             Row(
               children: [
                 const Icon(Icons.star, color: AppColors.orange),
@@ -70,23 +78,22 @@ class ProductDetailScreen extends StatelessWidget {
                 Text('${product.rating} (${product.ratingCount})'),
               ],
             ),
-
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               spacing: 50,
               children: [
                 ElevatedButton(
-                  onPressed: () => {
+                  onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (_) => UpdateProduct(product: product),
                       ),
-                    ),
+                    );
                   },
                   child: const Text('Edit'),
                 ),
-
                 ElevatedButton(
                   onPressed: () async => {
                     onDelete(product.id, context),
@@ -104,6 +111,7 @@ class ProductDetailScreen extends StatelessWidget {
   onDelete(int id, BuildContext context) async {
     ResponseDTO responseDTO = await service.deleteProduct(product.id);
     if (responseDTO.responseData != null) {
+      // await Helper.snackBar(context, 'Product Id ${responseDTO.responseData.} is deleted');
       await Helper.toast('Product Id $id is deleted');
       Navigator.pop(context);
     } else {

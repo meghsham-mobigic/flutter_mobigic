@@ -14,25 +14,33 @@ class WebDataService implements DataService {
 
   @override
   Future<ResponseDTO> createProduct(Map<String, dynamic> values) async {
-    return await HttpCalls.create(
+    return HttpCalls.postRequest(
       ApiConstants.fakeProductBasePath,
       headers,
       values,
     );
   }
 
-  // Method to collect all product from api endpoint -> working
   @override
   Future<ResponseDTO> readAllProduct() async {
-    return HttpCalls.getAll(
+    return HttpCalls.getRequest(
       ApiConstants.fakeProductBasePath,
       headers,
     );
   }
 
   @override
+  Future<ResponseDTO> readProduct(int identifier) {
+    return HttpCalls.getRequest(
+      ApiConstants.fakeProductBasePath,
+      headers,
+      id: identifier,
+    );
+  }
+
+  @override
   Future<ResponseDTO> updateProduct(Map<String, dynamic> values) async {
-    return HttpCalls.update(
+    return HttpCalls.putRequest(
       ApiConstants.fakeProductBasePath,
       int.parse(values['id'].toString()),
       headers,
@@ -42,7 +50,7 @@ class WebDataService implements DataService {
 
   @override
   Future<ResponseDTO> deleteProduct(int id) async {
-    return HttpCalls.delete(
+    return HttpCalls.deleteRequest(
       ApiConstants.fakeProductBasePath,
       headers,
       id,
@@ -56,7 +64,7 @@ class WebDataService implements DataService {
     Uint8List? fileBytes,
     String? fileName,
   }) {
-    return HttpCalls.multipartFileUploader(
+    return HttpCalls.multipartFileRequest(
       url,
       data: data,
       fileBytes: fileBytes,

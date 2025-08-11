@@ -14,6 +14,8 @@ abstract class DataService {
 
   Future<ResponseDTO> readAllProduct();
 
+  Future<ResponseDTO> readProduct(int identifier);
+
   Future<ResponseDTO> updateProduct(Map<String, dynamic> values);
 
   Future<ResponseDTO> deleteProduct(int productId);

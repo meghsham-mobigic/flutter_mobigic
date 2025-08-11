@@ -8,62 +8,78 @@ import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
 
 class HttpCalls {
-  static Future<ResponseDTO> getAll(
+  // Create
+  static Future<ResponseDTO> postRequest(
     String path,
     Map<String, String> headers,
+    Map<String, dynamic> jsonBody,
   ) async {
-    http.Response httpResponse = await http.get(
+    final http.Response httpResponse = await http.post(
       Uri.parse(path),
       headers: headers,
+      body: jsonEncode(jsonBody),
     );
+    return Helper.responseDTOConverter(httpResponse);
+  }
+
+  // Read
+  static Future<ResponseDTO> getRequest(
+    String path,
+    Map<String, String> headers, {
+    int? id,
+  }) async {
+    String finalPath = id != null ? '$path/${id}1000012' : path;
+    final uri = Uri.parse(finalPath);
+    final http.Response httpResponse = await http.get(uri, headers: headers);
 
     return Helper.responseDTOConverter(httpResponse);
   }
 
-  static Future<ResponseDTO> create(
+  // Update using put request
+  static Future<ResponseDTO> putRequest(
     String path,
+    int identifier,
     Map<String, String> headers,
     Map<String, dynamic> jsonMap,
   ) async {
-    http.Response httpResponse = await http.post(
-      Uri.parse(path),
-      headers: headers,
-      body: jsonEncode(jsonMap),
-    );
-
-    return Helper.responseDTOConverter(httpResponse);
-  }
-
-  // Method to update existing resource
-  static Future<ResponseDTO> update(
-    String path,
-    int id,
-    Map<String, String> headers,
-    Map<String, dynamic> jsonMap,
-  ) async {
-    http.Response httpResponse = await http.put(
-      Uri.parse('$path/$id'),
-      headers: headers,
-      body: jsonEncode(jsonMap),
-    );
-    return Helper.responseDTOConverter(httpResponse);
-  }
-
-  // Method to delete resource
-  static Future<ResponseDTO> delete(
-    String path,
-    Map<String, String> headers,
-    dynamic identifier,
-  ) async {
-    http.Response httpResponse = await http.get(
+    final http.Response httpResponse = await http.put(
       Uri.parse('$path/$identifier'),
       headers: headers,
+      body: jsonEncode(jsonMap),
     );
-
     return Helper.responseDTOConverter(httpResponse);
   }
 
-  static Future<ResponseDTO> multipartFileUploader(
+  // Update using patch request
+  static Future<ResponseDTO> patchRequest(
+    String path,
+    int identifier,
+    Map<String, String> headers,
+    Map<String, dynamic> jsonMap,
+  ) async {
+    final http.Response httpResponse = await http.patch(
+      Uri.parse('$path/$identifier'),
+      headers: headers,
+      body: jsonEncode(jsonMap),
+    );
+    return Helper.responseDTOConverter(httpResponse);
+  }
+
+  // Delete
+  static Future<ResponseDTO> deleteRequest(
+    String path,
+    Map<String, String> headers,
+    dynamic identifierentifier,
+  ) async {
+    final http.Response httpResponse = await http.get(
+      Uri.parse('$path/$identifierentifier'),
+      headers: headers,
+    );
+    return Helper.responseDTOConverter(httpResponse);
+  }
+
+  // Multipart File Upload
+  static Future<ResponseDTO> multipartFileRequest(
     String url, {
     dynamic data,
     Uint8List? fileBytes,
@@ -78,7 +94,10 @@ class HttpCalls {
           ? MediaType.parse(mimeType)
           : null;
 
-      var request = http.MultipartRequest('POST', Uri.parse(url));
+      http.MultipartRequest request = http.MultipartRequest(
+        'POST',
+        Uri.parse(url),
+      );
       request.files.add(
         http.MultipartFile.fromBytes(
           'file',
@@ -93,9 +112,8 @@ class HttpCalls {
           request.fields[key.toString()] = value.toString();
         });
       }
-
-      http.StreamedResponse streamedResponse = (await request.send());
-      response = await http.Response.fromStream(await streamedResponse);
+      http.StreamedResponse streamedResponse = await request.send();
+      response = await http.Response.fromStream(streamedResponse);
     } else {
       response = await http.post(
         Uri.parse(url),

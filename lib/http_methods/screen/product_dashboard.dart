@@ -18,12 +18,11 @@ class ProductDashboard extends StatefulWidget {
 
 class _ProductDashboard extends State<ProductDashboard> {
   final DataService service = locator.get<DataService>();
+  ResponseDTO responseDTO = ResponseDTO();
 
   Future<List<ProductModel>> getAllProductsDetails() async {
-    // debugPrint('getAllProductsDetails() gets called in product_dashboard');
-    ResponseDTO responseDTO = await service.readAllProduct();
-
-    final List<ProductModel> products;
+    debugPrint(' GET FOR ALL CALLED');
+    responseDTO = await service.readAllProduct();
     if (responseDTO.responseData.toString().isNotEmpty) {
       final decodedList =
           jsonDecode(responseDTO.responseData.toString()) as List<dynamic>;
@@ -31,12 +30,33 @@ class _ProductDashboard extends State<ProductDashboard> {
       return decodedList
           .map((item) => ProductModel.fromJson(item as Map<String, dynamic>))
           .toList();
-    } else {
-      throw Exception(
-        'Failed to load products. Status code: ${int.parse(responseDTO.error)} '
-        '(${Helper.statusCodeData(int.parse(responseDTO.error))})',
-      );
     }
+    return [];
+  }
+
+  Future<ProductModel> getProductDetails(int id) async {
+    debugPrint(' GET FOR ONE CALLED');
+
+    responseDTO = await service.readProduct(id);
+
+    if (responseDTO.responseData.toString().isNotEmpty) {
+      final decodedMap =
+          jsonDecode(responseDTO.responseData.toString())
+              as Map<String, dynamic>;
+      return ProductModel.fromJson(decodedMap);
+    }
+
+    await Helper.snackBar(context, 'Unable Product Unable');
+    return ProductModel(
+      id: 0,
+      title: 'title',
+      price: 0,
+      description: 'description',
+      category: 'category',
+      image: 'image',
+      rating: 0,
+      ratingCount: 0,
+    );
   }
 
   @override
@@ -44,11 +64,9 @@ class _ProductDashboard extends State<ProductDashboard> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Products Dashboard'),
-        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
-            tooltip: 'New',
             onPressed: () {
               Navigator.pushNamed(context, AppRoutes.addProduct);
             },
@@ -60,93 +78,99 @@ class _ProductDashboard extends State<ProductDashboard> {
       ),
       body: FutureBuilder<List<ProductModel>>(
         future: getAllProductsDetails(),
-        // when the list is called it call getAllProductsDetails() to get list data
         builder: (context, productsData) {
           if (productsData.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
-          } else if (productsData.hasError) {
+          } else if (responseDTO.error.toString().isNotEmpty) {
             return Center(
               child: Column(
                 children: [
                   Text(
-                    '${productsData.error}',
+                    '${int.parse(responseDTO.error.toString())}'
+                    ': ${Helper.statusCodeData(int.parse(responseDTO.error.toString()))}',
                   ),
                   const Icon(
-                    Icons
-                        .error, // Make sure you are using the correct icon from the Icons class
+                    Icons.error,
+                    // Make sure you are using the correct icon from the Icons class
                     size: 100,
                   ),
                 ],
               ),
             );
-          }
-          return ListView.builder(
-            itemCount: productsData.data!.length,
-            itemBuilder: (context, index) {
-              final product = productsData.data![index];
-              return Card(
-                elevation: 10,
-                margin: const EdgeInsets.all(10),
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      Image.network(
-                        product.image,
-                        height: 80,
-                        width: 80,
-                        fit: BoxFit.fill,
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Title : ${product.title}',
-                            ),
-                            const SizedBox(height: 5),
-                            Text(
-                              'Category : ${product.category}',
-                            ),
-                            const SizedBox(height: 5),
-                            Text(
-                              'Price : ₹ ${product.price}',
-                            ),
-                            const SizedBox(height: 5),
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.star,
-                                ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  '${product.rating}, Total RatingsCunt : '
-                                  '(${product.ratingCount})',
-                                ),
-                              ],
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) =>
-                                        ProductDetailScreen(product: product),
-                                  ),
-                                );
-                              },
-                              child: const Text('View Details'),
-                            ),
-                          ],
+          } else {
+            return ListView.builder(
+              itemCount: productsData.data!.length,
+              itemBuilder: (context, index) {
+                final product = productsData.data![index];
+                return Card(
+                  elevation: 10,
+                  margin: const EdgeInsets.all(10),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        Image.network(
+                          product.image,
+                          height: 80,
+                          width: 80,
+                          fit: BoxFit.fill,
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Title : ${product.title}',
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                'Category : ${product.category}',
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                'Price : ₹ ${product.price}',
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.star,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    '${product.rating}, Total RatingsCunt : '
+                                    '(${product.ratingCount})',
+                                  ),
+                                ],
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  final ProductModel selectedProduct =
+                                      await getProductDetails(product.id);
+                                  if (selectedProduct.id != 0) {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => ProductDetailScreen(
+                                          product: selectedProduct,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: const Text('View Details'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-          );
+                );
+              },
+            );
+          }
         },
       ),
     );

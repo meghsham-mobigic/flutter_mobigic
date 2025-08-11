@@ -117,12 +117,13 @@ class _UpdateProductState extends State<UpdateProduct> {
     ResponseDTO responseDTO = await service.updateProduct(values);
 
     if (responseDTO.responseData != null) {
-      await Helper.toast('Updated Product');
+      await Helper.snackBar(context, 'Updated Product');
       Navigator.pop(context);
       return;
     } else {
-      await Helper.toast(
-        'Updated Product '
+      await Helper.snackBar(
+        context,
+        'Updated Product'
         '${Helper.statusCodeData(int.parse(responseDTO.error))}',
       );
     }

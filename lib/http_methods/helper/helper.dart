@@ -41,13 +41,11 @@ class Helper {
 
     if (httpResponse.statusCode == 200 || httpResponse.statusCode == 201) {
       responseDTO.responseData = httpResponse.body;
-      print('filled with data');
+      // print('filled with data=>>' + responseDTO.responseData.toString());
     } else {
       responseDTO.error = httpResponse.statusCode.toString();
-
-      print('filled with error');
+      // print('filled with error=>>' + responseDTO.error.toString());
     }
-
     return responseDTO;
   }
 }

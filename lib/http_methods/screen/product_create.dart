@@ -108,8 +108,6 @@ class _CreateProductState extends State<CreateProduct> {
       'category': categoryController.text.trim(),
     });
 
-    // debugPrint(values.toString());
-
     ResponseDTO responseDTO = await service.createProduct(values);
 
     if (responseDTO.responseData != null) {
