@@ -16,7 +16,6 @@ class CreateProduct extends StatefulWidget {
 
 class _CreateProductState extends State<CreateProduct> {
   final DataService service = locator.get<DataService>();
-  TextEditingController idController = TextEditingController();
   TextEditingController titleController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -38,12 +37,12 @@ class _CreateProductState extends State<CreateProduct> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text('Create Product Form '),
-              InputBox(
-                label: 'ID',
-                controller: idController,
-                isRequired: true,
-                isNumber: true,
-              ),
+              // InputBox(
+              //   label: 'ID',
+              //   controller: idController,
+              //   isRequired: true,
+              //   isNumber: true,
+              // ),
               InputBox(
                 label: 'Title',
                 controller: titleController,
@@ -85,7 +84,6 @@ class _CreateProductState extends State<CreateProduct> {
 
   @override
   void dispose() {
-    idController.dispose();
     titleController.dispose();
     priceController.dispose();
     descriptionController.dispose();
@@ -96,11 +94,11 @@ class _CreateProductState extends State<CreateProduct> {
 
   Future<Map<String, dynamic>> onSubmit() async {
     Map<String, dynamic> values = {};
-    if (idController.text.isEmpty || categoryController.text.isEmpty) {
-      Helper.toast('ID & Category Required');
+    if (categoryController.text.isEmpty) {
+      await Helper.toast('ID & Category Required');
     }
     values.addAll({
-      'id': idController.text.trim(),
+      'id': '0',
       'title': titleController.text.trim(),
       'price': priceController.text.trim(),
       'description': descriptionController.text.trim(),
@@ -110,16 +108,24 @@ class _CreateProductState extends State<CreateProduct> {
 
     ResponseDTO responseDTO = await service.createProduct(values);
 
-    if (responseDTO.responseData != null) {
+    if (responseDTO.responseData.toString().isNotEmpty) {
       final decodedProduct =
           jsonDecode(responseDTO.responseData.toString())
               as Map<String, dynamic>;
-      await Helper.toast('Product Created');
+      // ProductModel productModel = ProductModel.fromJson(decodedProduct);
+
+      await Helper.snackBar(
+        context,
+        'Product Created',
+        // 'Product Created with ID : ${productModel.id}, Name: ${productModel.title}',
+      );
       return decodedProduct;
     } else {
-      throw Exception(
-        'Failed to create product. Status code: ${Helper.statusCodeData(int.parse(responseDTO.error))}',
+      await Helper.snackBar(
+        context,
+        'Error : ${responseDTO.error} Failed to Create Product',
       );
+      return {};
     }
   }
 }

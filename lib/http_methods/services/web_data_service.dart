@@ -40,7 +40,7 @@ class WebDataService implements DataService {
 
   @override
   Future<ResponseDTO> updateProduct(Map<String, dynamic> values) async {
-    return HttpCalls.putRequest(
+    return HttpCalls.patchRequest(
       ApiConstants.fakeProductBasePath,
       int.parse(values['id'].toString()),
       headers,

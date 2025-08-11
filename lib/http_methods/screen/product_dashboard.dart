@@ -35,7 +35,7 @@ class _ProductDashboard extends State<ProductDashboard> {
   }
 
   Future<ProductModel> getProductDetails(int id) async {
-    debugPrint(' GET FOR ONE CALLED');
+    debugPrint('GET FOR ONE CALLED');
 
     responseDTO = await service.readProduct(id);
 
@@ -87,7 +87,7 @@ class _ProductDashboard extends State<ProductDashboard> {
                 children: [
                   Text(
                     '${int.parse(responseDTO.error.toString())}'
-                    ': ${Helper.statusCodeData(int.parse(responseDTO.error.toString()))}',
+                    ': ${Helper.statusCodeData(responseDTO.error)}',
                   ),
                   const Icon(
                     Icons.error,

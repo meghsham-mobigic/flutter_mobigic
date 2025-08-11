@@ -26,6 +26,7 @@ class InputBox extends StatelessWidget {
         margin: const EdgeInsets.all(5),
         child: TextField(
           controller: controller,
+          enabled: !isDisabled,
           keyboardType: isNumber ? TextInputType.number : TextInputType.text,
           decoration: InputDecoration(
             border: const OutlineInputBorder(),

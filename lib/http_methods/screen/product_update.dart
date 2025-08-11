@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobigic/http_methods/Model/product_model.dart';
 import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
@@ -116,15 +118,21 @@ class _UpdateProductState extends State<UpdateProduct> {
 
     ResponseDTO responseDTO = await service.updateProduct(values);
 
-    if (responseDTO.responseData != null) {
-      await Helper.snackBar(context, 'Updated Product');
+    if (responseDTO.responseData.toString().isNotEmpty) {
+      // debugPrint(responseDTO.responseData.toString());
+      final decodedMap =
+          jsonDecode(responseDTO.responseData.toString())
+              as Map<String, dynamic>;
+      await Helper.snackBar(
+        context,
+        'Updated Product',
+      );
       Navigator.pop(context);
       return;
     } else {
       await Helper.snackBar(
         context,
-        'Updated Product'
-        '${Helper.statusCodeData(int.parse(responseDTO.error))}',
+        'Error : ${Helper.statusCodeData(responseDTO.error)} Product Not Updated',
       );
     }
   }

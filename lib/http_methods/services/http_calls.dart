@@ -28,7 +28,7 @@ class HttpCalls {
     Map<String, String> headers, {
     int? id,
   }) async {
-    String finalPath = id != null ? '$path/${id}1000012' : path;
+    String finalPath = id != null ? '$path/${id}' : path;
     final uri = Uri.parse(finalPath);
     final http.Response httpResponse = await http.get(uri, headers: headers);
 
@@ -58,7 +58,7 @@ class HttpCalls {
     Map<String, dynamic> jsonMap,
   ) async {
     final http.Response httpResponse = await http.patch(
-      Uri.parse('$path/$identifier'),
+      Uri.parse('${path}/$identifier'),
       headers: headers,
       body: jsonEncode(jsonMap),
     );
@@ -69,10 +69,10 @@ class HttpCalls {
   static Future<ResponseDTO> deleteRequest(
     String path,
     Map<String, String> headers,
-    dynamic identifierentifier,
+    dynamic identifier,
   ) async {
-    final http.Response httpResponse = await http.get(
-      Uri.parse('$path/$identifierentifier'),
+    final http.Response httpResponse = await http.delete(
+      Uri.parse('$path/$identifier'),
       headers: headers,
     );
     return Helper.responseDTOConverter(httpResponse);

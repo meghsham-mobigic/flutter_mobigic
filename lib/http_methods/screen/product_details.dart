@@ -110,12 +110,26 @@ class ProductDetailScreen extends StatelessWidget {
 
   onDelete(int id, BuildContext context) async {
     ResponseDTO responseDTO = await service.deleteProduct(product.id);
-    if (responseDTO.responseData != null) {
-      // await Helper.snackBar(context, 'Product Id ${responseDTO.responseData.} is deleted');
-      await Helper.toast('Product Id $id is deleted');
-      Navigator.pop(context);
+    if (responseDTO.responseData.toString().isNotEmpty) {
+      if (responseDTO.responseData.toString() == 'null') {
+        await Helper.snackBar(
+          context,
+          'Product Id $id Unavailable',
+        );
+        Navigator.pop(context);
+        return;
+      } else {
+        await Helper.snackBar(
+          context,
+          'Product Deleted Successfully ',
+        );
+        return;
+      }
     } else {
-      await Helper.toast('Product Id $id is not deleted');
+      await Helper.snackBar(
+        context,
+        'Error : ${Helper.statusCodeData(responseDTO.error)} Product Not Deleted',
+      );
     }
   }
 }

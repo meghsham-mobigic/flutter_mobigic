@@ -18,7 +18,8 @@ class Helper {
     );
   }
 
-  static String statusCodeData(int statusCode) {
+  static String statusCodeData(String stringStatusCode) {
+    int statusCode = int.parse(stringStatusCode);
     if (statusCode >= 100 && statusCode < 200) {
       return 'Informational';
     } else if (statusCode >= 200 && statusCode < 300) {
@@ -36,15 +37,12 @@ class Helper {
 
   static ResponseDTO responseDTOConverter(http.Response httpResponse) {
     ResponseDTO responseDTO = ResponseDTO();
-
-    debugPrint(httpResponse.statusCode.runtimeType.toString());
-
     if (httpResponse.statusCode == 200 || httpResponse.statusCode == 201) {
       responseDTO.responseData = httpResponse.body;
-      // print('filled with data=>>' + responseDTO.responseData.toString());
+      debugPrint('filled with data=>>${responseDTO.responseData}');
     } else {
       responseDTO.error = httpResponse.statusCode.toString();
-      // print('filled with error=>>' + responseDTO.error.toString());
+      debugPrint('filled with error=>>${responseDTO.error}');
     }
     return responseDTO;
   }
