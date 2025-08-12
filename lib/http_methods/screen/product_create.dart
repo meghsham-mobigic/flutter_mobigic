@@ -70,8 +70,6 @@ class _CreateProductState extends State<CreateProduct> {
                 onPressed: () async {
                   Map<String, dynamic> values = await onSubmit();
                   await service.createProduct(values);
-                  Navigator.pop(context);
-                  Navigator.pop(context);
                 },
                 child: const Text('Submit'),
               ),

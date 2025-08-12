@@ -44,6 +44,8 @@ class Helper {
       responseDTO.error = Helper.statusCodeData(
         httpResponse.statusCode.toString(),
       );
+      debugPrint(responseDTO.responseData.isNotEmpty.toString());
+      debugPrint('filled with error=>>${responseDTO.error}');
     }
     return responseDTO;
   }
