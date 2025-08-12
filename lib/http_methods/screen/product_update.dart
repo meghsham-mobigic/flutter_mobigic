@@ -106,7 +106,7 @@ class _UpdateProductState extends State<UpdateProduct> {
     if (idController.text.isEmpty || categoryController.text.isEmpty) {
       await Helper.toast('ID & Category Required');
     }
-
+    //producy model
     values.addAll({
       'id': idController.text.trim(),
       'title': titleController.text.trim(),

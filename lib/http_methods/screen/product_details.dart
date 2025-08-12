@@ -109,9 +109,9 @@ class ProductDetailScreen extends StatelessWidget {
   }
 
   onDelete(int id, BuildContext context) async {
-    ResponseDTO responseDTO = await service.deleteProduct(product.id);
+    ResponseDTO responseDTO = await service.deleteProduct(1111);
     if (responseDTO.responseData.toString().isNotEmpty) {
-      if (responseDTO.responseData.toString() == 'null') {
+      if (responseDTO.responseData == 'null') {
         await Helper.snackBar(
           context,
           'Product Id $id Unavailable',

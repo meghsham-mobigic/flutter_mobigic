@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:flutter_mobigic/http_methods/Model/product_model.dart';
 import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:flutter_mobigic/http_methods/helper/helper.dart';
 import 'package:http/http.dart' as http;
@@ -12,12 +13,12 @@ class HttpCalls {
   static Future<ResponseDTO> postRequest(
     String path,
     Map<String, String> headers,
-    Map<String, dynamic> jsonBody,
+    ProductModel product,
   ) async {
     final http.Response httpResponse = await http.post(
       Uri.parse(path),
       headers: headers,
-      body: jsonEncode(jsonBody),
+      body: jsonEncode(product.toJson()),
     );
     return Helper.responseDTOConverter(httpResponse);
   }

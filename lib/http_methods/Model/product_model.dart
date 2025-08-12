@@ -17,8 +17,17 @@ class ProductModel {
     required this.image,
     required this.rating,
     required this.ratingCount,
-    
   });
+
+  ProductModel.empty()
+    : id = 0,
+      title = '',
+      price = 0.0,
+      description = '',
+      category = '',
+      image = '',
+      rating = 0.0,
+      ratingCount = 0;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     final ratingData = json['rating'] ?? {};
@@ -33,5 +42,20 @@ class ProductModel {
       rating: (ratingData['rate'] as num?)?.toDouble() ?? 0.0,
       ratingCount: (ratingData['count'] as num?)?.toInt() ?? 0,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'price': price,
+      'description': description,
+      'category': category,
+      'image': image,
+      'rating': {
+        'rate': rating,
+        'count': ratingCount,
+      },
+    };
   }
 }

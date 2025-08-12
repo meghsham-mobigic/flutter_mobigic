@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter_mobigic/constants/app_string_constants.dart';
+import 'package:flutter_mobigic/http_methods/Model/product_model.dart';
 import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:flutter_mobigic/http_methods/services/data_service.dart';
 import 'package:flutter_mobigic/http_methods/services/http_calls.dart';
@@ -13,11 +14,11 @@ class WebDataService implements DataService {
   HttpCalls caller = HttpCalls();
 
   @override
-  Future<ResponseDTO> createProduct(Map<String, dynamic> values) async {
+  Future<ResponseDTO> createProduct(ProductModel product) async {
     return HttpCalls.postRequest(
       ApiConstants.fakeProductBasePath,
       headers,
-      values,
+      product,
     );
   }
 
