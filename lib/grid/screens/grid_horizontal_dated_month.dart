@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobigic/grid/utils/grid_generator_horizontal.dart';
 
 class HorizontalDatedMonthGrid extends StatefulWidget {
-
   const HorizontalDatedMonthGrid({
     required this.title,
     required this.weekStartsOn,
@@ -10,7 +9,7 @@ class HorizontalDatedMonthGrid extends StatefulWidget {
     required this.daysInMonth,
     super.key,
   });
-  
+
   final String title;
   final int weekStartsOn;
   final int monthStartsOn;
@@ -59,8 +58,9 @@ class _HorizontalDatedMonthGridState extends State<HorizontalDatedMonthGrid> {
                 crossAxisCount: 7,
                 childAspectRatio: 1.5,
                 children: List.generate(42, (index) {
-                  final isHeader = index < 7;
-                  final text = monthGrid[index];
+                  final bool isHeader = index < 7;
+                  final String text = monthGrid[index];
+                  debugPrint('${text.runtimeType}');
                   return Container(
                     margin: const EdgeInsets.all(1),
                     decoration: BoxDecoration(

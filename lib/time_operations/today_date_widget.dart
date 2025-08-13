@@ -37,9 +37,9 @@ class _TodayDateWidgetState extends State<TodayDateWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = DateFormat('dd-MM-yyyy HH:mm:ss');
-    final before = now.subtract(const Duration(hours: 9, minutes: 30));
-    final after = now.add(const Duration(hours: 9, minutes: 30));
+    final DateFormat formatter = DateFormat('dd-MM-yyyy HH:mm:ss');
+    final DateTime before = now.subtract(const Duration(hours: 9, minutes: 30));
+    final DateTime after = now.add(const Duration(hours: 9, minutes: 30));
 
     return Card(
       elevation: 4,

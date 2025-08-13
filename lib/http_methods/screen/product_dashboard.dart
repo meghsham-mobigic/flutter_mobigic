@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobigic/http_methods/Model/product_model.dart';
 import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:flutter_mobigic/http_methods/helper/helper.dart';
-import 'package:flutter_mobigic/http_methods/screen/product_details.dart';
 import 'package:flutter_mobigic/http_methods/services/data_service.dart';
 import 'package:flutter_mobigic/locator.dart';
 import 'package:flutter_mobigic/routes/app_routes.dart';
@@ -21,10 +20,12 @@ class _ProductDashboard extends State<ProductDashboard> {
   ResponseDTO responseDTO = ResponseDTO();
 
   Future<List<ProductModel>> getAllProductsDetails() async {
-    debugPrint(' GET FOR ALL CALLED');
-    responseDTO = await service.readAllProduct();
+    debugPrint(
+      'product_dashboard.dart : getAllProductsDetails() : Call to get all products',
+    );
+    responseDTO = await service.readProduct('');
     if (responseDTO.responseData.toString().isNotEmpty) {
-      final decodedList =
+      final List<dynamic> decodedList =
           jsonDecode(responseDTO.responseData.toString()) as List<dynamic>;
 
       return decodedList
@@ -34,29 +35,21 @@ class _ProductDashboard extends State<ProductDashboard> {
     return [];
   }
 
-  Future<ProductModel> getProductDetails(int id) async {
-    debugPrint('GET FOR ONE CALLED');
+  Future<ProductModel> getProductDetails(String id) async {
+    // debugPrint(
+    //   'product_dashboard.dart : getAllProductsDetails() : Call to get a productID $id',
+    // );
 
     responseDTO = await service.readProduct(id);
 
     if (responseDTO.responseData.toString().isNotEmpty) {
-      final decodedMap =
-          jsonDecode(responseDTO.responseData.toString())
-              as Map<String, dynamic>;
-      return ProductModel.fromJson(decodedMap);
+      return ProductModel.fromJson(
+        jsonDecode(responseDTO.responseData.toString()) as Map<String, dynamic>,
+      );
     }
 
     await Helper.snackBar(context, 'Unable Product Unable');
-    return ProductModel(
-      id: 0,
-      title: 'title',
-      price: 0,
-      description: 'description',
-      category: 'category',
-      image: 'image',
-      rating: 0,
-      ratingCount: 0,
-    );
+    return ProductModel.empty();
   }
 
   @override
@@ -90,7 +83,6 @@ class _ProductDashboard extends State<ProductDashboard> {
                   ),
                   const Icon(
                     Icons.error,
-                    // Make sure you are using the correct icon from the Icons class
                     size: 100,
                   ),
                 ],
@@ -100,7 +92,7 @@ class _ProductDashboard extends State<ProductDashboard> {
             return ListView.builder(
               itemCount: productsData.data!.length,
               itemBuilder: (context, index) {
-                final product = productsData.data![index];
+                final ProductModel product = productsData.data![index];
                 return Card(
                   elevation: 10,
                   margin: const EdgeInsets.all(10),
@@ -138,23 +130,22 @@ class _ProductDashboard extends State<ProductDashboard> {
                                   ),
                                   const SizedBox(width: 5),
                                   Text(
-                                    '${product.rating}, Total RatingsCunt : '
-                                    '(${product.ratingCount})',
+                                    '${product.rating.rate} / '
+                                    '${product.rating.count} Ratings',
                                   ),
                                 ],
                               ),
                               TextButton(
                                 onPressed: () async {
                                   final ProductModel selectedProduct =
-                                      await getProductDetails(product.id);
+                                      await getProductDetails(
+                                        product.id.toString(),
+                                      );
                                   if (selectedProduct.id != 0) {
-                                    await Navigator.push(
+                                    await Navigator.pushNamed(
                                       context,
-                                      MaterialPageRoute(
-                                        builder: (_) => ProductDetailScreen(
-                                          product: selectedProduct,
-                                        ),
-                                      ),
+                                      AppRoutes.detailsProduct,
+                                      arguments: selectedProduct,
                                     );
                                   }
                                 },

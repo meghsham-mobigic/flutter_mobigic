@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobigic/jobs/repository/db_connect.dart';
 import 'package:flutter_mobigic/routes/app_routes.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -21,8 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _handleLogin(BuildContext context) {
-    final enteredUsername = usernameController.text;
-    final enteredPassword = passwordController.text;
+    final String enteredUsername = usernameController.text;
+    final String enteredPassword = passwordController.text;
 
     if (enteredUsername.isEmpty || enteredPassword.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(

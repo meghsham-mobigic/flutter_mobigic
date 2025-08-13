@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobigic/http_methods/Model/product_model.dart';
 import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:flutter_mobigic/http_methods/helper/helper.dart';
-import 'package:flutter_mobigic/http_methods/screen/InputBox.dart';
+import 'package:flutter_mobigic/http_methods/screen/input_box.dart';
 import 'package:flutter_mobigic/http_methods/services/data_service.dart';
 import 'package:flutter_mobigic/locator.dart';
 
@@ -77,11 +75,24 @@ class _UpdateProductState extends State<UpdateProduct> {
               controller: categoryController,
               isRequired: true,
             ),
+            const SizedBox(
+              height: 10,
+            ),
             ElevatedButton(
               onPressed: () async {
-                await onUpdate();
+                await onUpdate(0);
               },
-              child: const Text('Update'),
+              child: const Text('Update With Patch Request'),
+            ),
+
+            const SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                await onUpdate(1);
+              },
+              child: const Text('Update With Put Request'),
             ),
           ],
         ),
@@ -100,39 +111,47 @@ class _UpdateProductState extends State<UpdateProduct> {
     super.dispose();
   }
 
-  Future<void> onUpdate() async {
-    Map<String, dynamic> values = {};
-
+  Future<void> onUpdate(int requestType) async {
     if (idController.text.isEmpty || categoryController.text.isEmpty) {
-      await Helper.toast('ID & Category Required');
+      await Helper.toast('Category Required');
+      return;
     }
-    //producy model
-    values.addAll({
-      'id': idController.text.trim(),
-      'title': titleController.text.trim(),
-      'price': priceController.text.trim(),
-      'description': descriptionController.text.trim(),
-      'image': imageController.text.trim(),
-      'category': categoryController.text.trim(),
-    });
 
-    ResponseDTO responseDTO = await service.updateProduct(values);
+    // Map removed and then used Product model
+    ProductModel productModel = ProductModel(
+      id: int.parse(idController.text),
+      title: idController.text.trim(),
+      price: double.parse(priceController.text.trim()),
+      description: descriptionController.text.trim(),
+      category: categoryController.text.trim(),
+      image: imageController.text.trim(),
+      rating: product.rating,
+    );
+    ResponseDTO responseDTO;
+
+    if (requestType == 1) {
+      responseDTO = await service.updateProductWithPatch(productModel);
+    } else {
+      responseDTO = await service.updateProductWithPut(productModel);
+    }
 
     if (responseDTO.responseData.toString().isNotEmpty) {
       // debugPrint(responseDTO.responseData.toString());
-      final decodedMap =
-          jsonDecode(responseDTO.responseData.toString())
-              as Map<String, dynamic>;
+      // Map<String, dynamic> decodedMap =
+      //     jsonDecode(responseDTO.responseData.toString())
+      //         as Map<String, dynamic>;
+
       await Helper.snackBar(
         context,
-        'Updated Product',
+        '${requestType == 0 ? 'Updated Product With Patch Request' : 'Updated Product With Put Request'} Successful',
       );
       Navigator.pop(context);
       return;
     } else {
       await Helper.snackBar(
         context,
-        'Error : ${responseDTO.error}  Product Not Updated',
+        'Error : ${responseDTO.error} '
+        '${requestType == 0 ? 'Product Not Updated With Patch Request' : 'Product Not Updated With Put Request'} Successful',
       );
     }
   }

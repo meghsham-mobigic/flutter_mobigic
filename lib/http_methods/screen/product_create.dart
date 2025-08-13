@@ -2,14 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobigic/http_methods/Model/product_model.dart';
+import 'package:flutter_mobigic/http_methods/Model/rating_model.dart';
 import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:flutter_mobigic/http_methods/helper/helper.dart';
-import 'package:flutter_mobigic/http_methods/screen/InputBox.dart';
+import 'package:flutter_mobigic/http_methods/screen/input_box.dart';
 import 'package:flutter_mobigic/http_methods/services/data_service.dart';
 import 'package:flutter_mobigic/locator.dart';
 
 class CreateProduct extends StatefulWidget {
-  CreateProduct({super.key});
+  const CreateProduct({super.key});
 
   @override
   State<CreateProduct> createState() => _CreateProductState();
@@ -36,49 +37,48 @@ class _CreateProductState extends State<CreateProduct> {
       appBar: AppBar(
         title: const Text(' Create Product'),
       ),
-      body: Container(
-        //need more styling
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Create Product Form '),
-              InputBox(
-                label: 'Title',
-                controller: titleController,
-              ),
-              InputBox(
-                label: 'Price',
-                controller: priceController,
-                isNumber: true,
-              ),
-              InputBox(
-                label: 'Description',
-                controller: descriptionController,
-              ),
-              InputBox(
-                label: 'Image',
-                controller: imageController,
-              ),
-              InputBox(
-                label: 'Category',
-                controller: categoryController,
-                isRequired: true,
-              ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Create Product Form '),
+            InputBox(
+              label: 'Title',
+              controller: titleController,
+            ),
+            InputBox(
+              label: 'Price',
+              controller: priceController,
+              isNumber: true,
+            ),
+            InputBox(
+              label: 'Description',
+              controller: descriptionController,
+            ),
+            InputBox(
+              label: 'Image',
+              controller: imageController,
+            ),
+            InputBox(
+              label: 'Category',
+              controller: categoryController,
+              isRequired: true,
+            ),
 
-              ElevatedButton(
-                onPressed: () async {
-                  ProductModel product = await onSubmit();
-                  // debugPrint('=>' + product.id.toString());
-                  // debugPrint('=>' + product.id.toString().length.toString());
-                  if (product.category != '') {
-                    await service.createProduct(product);
-                  }
-                },
-                child: const Text('Submit'),
-              ),
-            ],
-          ),
+            ElevatedButton(
+              onPressed: () async {
+                final ProductModel product = await onSubmit();
+                // debugPrint('product_create.dart => Product : ${product}');
+                // debugPrint('product_create.dart => ' + product.id.toString());
+                // debugPrint('product_create.dart => ' + product.id.toString().length.toString());
+
+                if (product.category != '') {
+                  await service.createProduct(product);
+                }
+              },
+              child: const Text('Submit'),
+            ),
+          ],
         ),
       ),
     );
@@ -96,30 +96,42 @@ class _CreateProductState extends State<CreateProduct> {
 
   Future<ProductModel> onSubmit() async {
     if (categoryController.text.isEmpty) {
-      await Helper.toast('Category Required');
+      await Helper.snackBar(context, 'Category Required');
       return ProductModel.empty();
     }
 
-    ProductModel productModel = ProductModel(
+    final ProductModel productModel = ProductModel(
       id: 0,
       title: titleController.text.trim(),
-      price: double.parse(priceController.text.trim()),
+      price: double.tryParse(priceController.text) ?? 0.0,
       description: descriptionController.text.trim(),
       category: categoryController.text.trim(),
       image: imageController.text.trim(),
-      rating: 0,
-      ratingCount: 0,
+      rating: Rating.empty(),
     );
 
-    ResponseDTO responseDTO = await service.createProduct(productModel);
+    final ResponseDTO responseDTO = await service.createProduct(productModel);
+
+    // debugPrint(
+    //   'product_create.dart => ResponseDTO.responseData : ${responseDTO.responseData} : ',
+    // );
+    // debugPrint(
+    //   'product_create.dart => ResponseDTO.error : ${responseDTO.error} : ',
+    // );
 
     if (responseDTO.responseData.toString().isNotEmpty) {
-      final decodedProduct =
-          jsonDecode(responseDTO.responseData.toString())
-              as Map<String, dynamic>;
+      await Helper.snackBar(context, 'Product Created Successfully');
 
-      await Helper.snackBar(context, 'Product Created');
-      return ProductModel.fromJson(decodedProduct);
+      /*
+        as suggested changed to type specific but still not sure to use  as Map<String, dynamic>;
+        because the jsonDecode gives dynamic value but i need to convert it in Map<String, dynamic>
+        String is key and value can anything that why its dynamic
+        debugPrint('product_create.dart =>${decodedProduct.runtimeType.toString()}');
+      */
+
+      return ProductModel.fromJson(
+        jsonDecode(responseDTO.responseData.toString()) as Map<String, dynamic>,
+      );
     } else {
       await Helper.snackBar(
         context,

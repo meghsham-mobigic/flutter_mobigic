@@ -3,9 +3,9 @@ import 'package:flutter_mobigic/constants/app_colors.dart';
 import 'package:flutter_mobigic/http_methods/Model/product_model.dart';
 import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
 import 'package:flutter_mobigic/http_methods/helper/helper.dart';
-import 'package:flutter_mobigic/http_methods/screen/product_update.dart';
 import 'package:flutter_mobigic/http_methods/services/data_service.dart';
 import 'package:flutter_mobigic/locator.dart';
+import 'package:flutter_mobigic/routes/app_routes.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   ProductDetailScreen({required this.product, super.key});
@@ -75,7 +75,7 @@ class ProductDetailScreen extends StatelessWidget {
               children: [
                 const Icon(Icons.star, color: AppColors.orange),
                 const SizedBox(width: 6),
-                Text('${product.rating} (${product.ratingCount})'),
+                Text('${product.rating.rate} (${product.rating.count})'),
               ],
             ),
             const SizedBox(height: 20),
@@ -84,19 +84,19 @@ class ProductDetailScreen extends StatelessWidget {
               spacing: 50,
               children: [
                 ElevatedButton(
+                  //use of navigation 1.0 named method :
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushNamed(
                       context,
-                      MaterialPageRoute(
-                        builder: (_) => UpdateProduct(product: product),
-                      ),
+                      AppRoutes.updateProduct,
+                      arguments: product,
                     );
                   },
                   child: const Text('Edit'),
                 ),
                 ElevatedButton(
                   onPressed: () async => {
-                    onDelete(product.id, context),
+                    onDelete(product.id.toString(), context),
                   },
                   child: const Text('Delete'),
                 ),
@@ -108,8 +108,9 @@ class ProductDetailScreen extends StatelessWidget {
     );
   }
 
-  onDelete(int id, BuildContext context) async {
-    ResponseDTO responseDTO = await service.deleteProduct(1111);
+  onDelete(String id, BuildContext context) async {
+    ResponseDTO responseDTO = await service.deleteProduct(id);
+
     if (responseDTO.responseData.toString().isNotEmpty) {
       if (responseDTO.responseData == 'null') {
         await Helper.snackBar(

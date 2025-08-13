@@ -115,7 +115,8 @@ class _FilePickerAppRoot extends State<FilePickerAppRoot> {
                                   children: [
                                     ElevatedButton.icon(
                                       onPressed: () async {
-                                        final filePath = filesList[file].path;
+                                        final String? filePath =
+                                            filesList[file].path;
                                         if (filePath != null) {
                                           await OpenAppFile.open(filePath);
                                         }

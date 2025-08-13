@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_mobigic/constants/app_string_constants.dart';
 import 'package:flutter_mobigic/http_methods/Model/product_model.dart';
 import 'package:flutter_mobigic/http_methods/Model/response_dto.dart';
@@ -14,47 +15,51 @@ class WebDataService implements DataService {
   HttpCalls caller = HttpCalls();
 
   @override
-  Future<ResponseDTO> createProduct(ProductModel product) async {
+  Future<ResponseDTO> createProduct(ProductModel productBody) async {
     return HttpCalls.postRequest(
       ApiConstants.fakeProductBasePath,
+      headers,
+      productBody,
+    );
+  }
+
+  @override
+  Future<ResponseDTO> readProduct(String id) {
+    final String path = '${ApiConstants.fakeProductBasePath}/$id';
+    return HttpCalls.getRequest(
+      path,
+      headers,
+    );
+  }
+
+  @override
+  Future<ResponseDTO> updateProductWithPatch(ProductModel product) async {
+    final String path = '${ApiConstants.fakeProductBasePath}/${product.id}';
+    debugPrint('web_data_service.dart : PATCH $path');
+    return HttpCalls.patchRequest(
+      path,
       headers,
       product,
     );
   }
 
   @override
-  Future<ResponseDTO> readAllProduct() async {
-    return HttpCalls.getRequest(
-      ApiConstants.fakeProductBasePath,
-      headers,
-    );
-  }
-
-  @override
-  Future<ResponseDTO> readProduct(int identifier) {
-    return HttpCalls.getRequest(
-      ApiConstants.fakeProductBasePath,
-      headers,
-      id: identifier,
-    );
-  }
-
-  @override
-  Future<ResponseDTO> updateProduct(Map<String, dynamic> values) async {
+  Future<ResponseDTO> updateProductWithPut(ProductModel product) async {
+    final String path = '${ApiConstants.fakeProductBasePath}/${product.id}';
+    debugPrint('web_data_service.dart : PUT $path');
     return HttpCalls.patchRequest(
-      ApiConstants.fakeProductBasePath,
-      int.parse(values['id'].toString()),
+      path,
       headers,
-      values,
+      product,
     );
   }
 
   @override
-  Future<ResponseDTO> deleteProduct(int id) async {
+  Future<ResponseDTO> deleteProduct(String id) async {
+    final String path = '${ApiConstants.fakeProductBasePath}/$id';
     return HttpCalls.deleteRequest(
-      ApiConstants.fakeProductBasePath,
+      path,
       headers,
-      id,
     );
   }
 

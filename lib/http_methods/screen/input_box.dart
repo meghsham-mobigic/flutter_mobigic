@@ -18,13 +18,13 @@ class InputBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final displayLabel = isRequired ? '$label *' : label;
+    final String displayLabel = isRequired ? '$label *' : label;
 
     return SizedBox(
       width: 250,
       child: Container(
         margin: const EdgeInsets.all(5),
-        child: TextField(
+        child: TextFormField(
           controller: controller,
           enabled: !isDisabled,
           keyboardType: isNumber ? TextInputType.number : TextInputType.text,

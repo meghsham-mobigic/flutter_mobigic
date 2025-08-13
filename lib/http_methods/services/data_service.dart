@@ -13,11 +13,11 @@ abstract class DataService {
     String? fileName,
   });
 
-  Future<ResponseDTO> readAllProduct();
+  Future<ResponseDTO> readProduct(String identifier);
 
-  Future<ResponseDTO> readProduct(int identifier);
+  Future<ResponseDTO> updateProductWithPatch(ProductModel product);
 
-  Future<ResponseDTO> updateProduct(Map<String, dynamic> values);
+  Future<ResponseDTO> updateProductWithPut(ProductModel product);
 
-  Future<ResponseDTO> deleteProduct(int productId);
+  Future<ResponseDTO> deleteProduct(String productId);
 }

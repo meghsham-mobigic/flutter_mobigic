@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobigic/images_in_ratio/image_preview_page.dart';
+import 'package:flutter_mobigic/routes/app_routes.dart';
+
 class AspectRatioAppRoot extends StatefulWidget {
   const AspectRatioAppRoot({super.key});
 
@@ -45,14 +46,13 @@ class _AspectRatioAppRootState extends State<AspectRatioAppRoot> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
+                Navigator.pushNamed(
                   context,
-                  MaterialPageRoute<void>(
-                    builder: (_) => ImagePreviewPage(
-                      aspectRatio: aspectRatioMap[selectedRatio]!,
-                      label: selectedRatio,
-                    ),
-                  ),
+                  AppRoutes.imagePreviewRoute,
+                  arguments: {
+                    'aspectRatio': aspectRatioMap[selectedRatio]!,
+                    'label': selectedRatio,
+                  },
                 );
               },
               child: const Text('Show Image'),

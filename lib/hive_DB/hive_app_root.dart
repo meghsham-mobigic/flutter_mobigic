@@ -81,8 +81,8 @@ class _HiveDBAppRootState extends State<HiveDBAppRoot> {
         const SizedBox(height: 15),
         ElevatedButton(
           onPressed: () {
-            final roll = int.tryParse(rollNoController.text);
-            final name = nameController.text.trim();
+            final int roll = int.tryParse(rollNoController.text) ?? 0;
+            final String name = nameController.text.trim();
             if (roll != null && name.isNotEmpty) {
               createStudent(roll, name);
             }

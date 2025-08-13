@@ -39,13 +39,13 @@ class Helper {
     ResponseDTO responseDTO = ResponseDTO();
     if (httpResponse.statusCode == 200 || httpResponse.statusCode == 201) {
       responseDTO.responseData = httpResponse.body;
-      debugPrint('filled with data=>>${responseDTO.responseData}');
+      // debugPrint('filled with data=>>${responseDTO.responseData}');
     } else {
       responseDTO.error = Helper.statusCodeData(
         httpResponse.statusCode.toString(),
       );
-      debugPrint(responseDTO.responseData.isNotEmpty.toString());
-      debugPrint('filled with error=>>${responseDTO.error}');
+      // debugPrint('=>' + responseDTO.responseData.isNotEmpty.toString());
+      // debugPrint('filled with error=>>${responseDTO.error}');
     }
     return responseDTO;
   }

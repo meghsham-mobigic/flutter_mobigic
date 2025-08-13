@@ -36,7 +36,8 @@ class _JobApplicationFormScreenState extends State<JobApplicationFormScreen> {
   };
 
   void _updateSkillsForRole(String? role) {
-    final skills = _roleSkills[role] ?? [];
+    final List<String> skills = _roleSkills[role] ?? [];
+
     setState(() {
       _skills = {for (var skill in skills) skill: false};
     });
