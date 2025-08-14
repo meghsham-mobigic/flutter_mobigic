@@ -23,6 +23,8 @@ class _CreateProductState extends State<CreateProduct> {
   // .get call Explicitly and makes code more readable
   // final DataService service = locator<DataService>();
 
+  final _formKey = GlobalKey<FormState>();
+
   TextEditingController titleController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -38,47 +40,51 @@ class _CreateProductState extends State<CreateProduct> {
         title: const Text(' Create Product'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Create Product Form '),
-            InputBox(
-              label: 'Title',
-              controller: titleController,
-            ),
-            InputBox(
-              label: 'Price',
-              controller: priceController,
-              isNumber: true,
-            ),
-            InputBox(
-              label: 'Description',
-              controller: descriptionController,
-            ),
-            InputBox(
-              label: 'Image',
-              controller: imageController,
-            ),
-            InputBox(
-              label: 'Category',
-              controller: categoryController,
-              isRequired: true,
-            ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('Create Product Form '),
+              InputBox(
+                label: 'Title',
+                controller: titleController,
+              ),
+              InputBox(
+                label: 'Price',
+                controller: priceController,
+                isNumber: true,
+              ),
+              InputBox(
+                label: 'Description',
+                controller: descriptionController,
+              ),
+              InputBox(
+                label: 'Image',
+                controller: imageController,
+              ),
+              InputBox(
+                label: 'Category',
+                controller: categoryController,
+                isRequired: true,
+              ),
 
-            ElevatedButton(
-              onPressed: () async {
-                final ProductModel product = await onSubmit();
-                // debugPrint('product_create.dart => Product : ${product}');
-                // debugPrint('product_create.dart => ' + product.id.toString());
-                // debugPrint('product_create.dart => ' + product.id.toString().length.toString());
-
-                if (product.category != '') {
-                  await service.createProduct(product);
-                }
-              },
-              child: const Text('Submit'),
-            ),
-          ],
+              ElevatedButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    final ProductModel product = await onSubmit();
+                    // debugPrint('product_create.dart => Product : ${product}');
+                    // debugPrint('product_create.dart => ' + product.id.toString());
+                    // debugPrint('product_create.dart => ' + product.id.toString().length.toString());
+                    if (product.category != '') {
+                      await service.createProduct(product);
+                    }
+                  }
+                },
+                child: const Text('Submit'),
+              ),
+            ],
+          ),
         ),
       ),
     );

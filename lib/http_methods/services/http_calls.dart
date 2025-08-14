@@ -11,7 +11,7 @@ import 'package:mime/mime.dart';
 
 class HttpCalls {
   // Create
-  static Future<ResponseDTO> postRequest(
+  static Future<ResponseDTO> performHTTPPOST(
     String path,
     Map<String, String> headers,
     ProductModel product, //use of dynamic
@@ -26,7 +26,7 @@ class HttpCalls {
   }
 
   // Read
-  static Future<ResponseDTO> getRequest(
+  static Future<ResponseDTO> performHTTPGET(
     String path,
     Map<String, String> headers,
   ) async {
@@ -38,7 +38,7 @@ class HttpCalls {
   }
 
   // Update using put request
-  static Future<ResponseDTO> putRequest(
+  static Future<ResponseDTO> performHTTPPUT(
     String path,
     Map<String, String> headers,
     ProductModel product,
@@ -57,7 +57,7 @@ class HttpCalls {
   }
 
   // Update using patch request
-  static Future<ResponseDTO> patchRequest(
+  static Future<ResponseDTO> performHTTPPATCH(
     String path,
     Map<String, String> headers,
     ProductModel product,
@@ -72,7 +72,7 @@ class HttpCalls {
   }
 
   // Delete
-  static Future<ResponseDTO> deleteRequest(
+  static Future<ResponseDTO> performHTTPDELETE(
     String path,
     Map<String, String> headers,
   ) async {
@@ -85,7 +85,7 @@ class HttpCalls {
   }
 
   // Multipart File Upload
-  static Future<ResponseDTO> multipartFileRequest(
+  static Future<ResponseDTO> performHTTPPOSTMUTLIPART(
     String url, {
     dynamic data,
     Uint8List? fileBytes,

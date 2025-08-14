@@ -108,7 +108,7 @@ class ProductDetailScreen extends StatelessWidget {
     );
   }
 
-  onDelete(String id, BuildContext context) async {
+  Future<void> onDelete(String id, BuildContext context) async {
     ResponseDTO responseDTO = await service.deleteProduct(id);
 
     if (responseDTO.responseData.toString().isNotEmpty) {

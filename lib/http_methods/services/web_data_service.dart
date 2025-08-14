@@ -16,7 +16,7 @@ class WebDataService implements DataService {
 
   @override
   Future<ResponseDTO> createProduct(ProductModel productBody) async {
-    return HttpCalls.postRequest(
+    return HttpCalls.performHTTPPOST(
       ApiConstants.fakeProductBasePath,
       headers,
       productBody,
@@ -26,7 +26,7 @@ class WebDataService implements DataService {
   @override
   Future<ResponseDTO> readProduct(String id) {
     final String path = '${ApiConstants.fakeProductBasePath}/$id';
-    return HttpCalls.getRequest(
+    return HttpCalls.performHTTPGET(
       path,
       headers,
     );
@@ -36,7 +36,7 @@ class WebDataService implements DataService {
   Future<ResponseDTO> updateProductWithPatch(ProductModel product) async {
     final String path = '${ApiConstants.fakeProductBasePath}/${product.id}';
     debugPrint('web_data_service.dart : PATCH $path');
-    return HttpCalls.patchRequest(
+    return HttpCalls.performHTTPPATCH(
       path,
       headers,
       product,
@@ -47,7 +47,7 @@ class WebDataService implements DataService {
   Future<ResponseDTO> updateProductWithPut(ProductModel product) async {
     final String path = '${ApiConstants.fakeProductBasePath}/${product.id}';
     debugPrint('web_data_service.dart : PUT $path');
-    return HttpCalls.patchRequest(
+    return HttpCalls.performHTTPPATCH(
       path,
       headers,
       product,
@@ -57,7 +57,7 @@ class WebDataService implements DataService {
   @override
   Future<ResponseDTO> deleteProduct(String id) async {
     final String path = '${ApiConstants.fakeProductBasePath}/$id';
-    return HttpCalls.deleteRequest(
+    return HttpCalls.performHTTPDELETE(
       path,
       headers,
     );
@@ -70,7 +70,7 @@ class WebDataService implements DataService {
     Uint8List? fileBytes,
     String? fileName,
   }) {
-    return HttpCalls.multipartFileRequest(
+    return HttpCalls.performHTTPPOSTMUTLIPART(
       url,
       data: data,
       fileBytes: fileBytes,

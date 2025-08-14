@@ -17,6 +17,9 @@ class UpdateProduct extends StatefulWidget {
 class _UpdateProductState extends State<UpdateProduct> {
   _UpdateProductState(this.product);
   ProductModel product;
+
+  final _formKey = GlobalKey<FormState>();
+
   final DataService service = locator.get<DataService>();
   TextEditingController idController = TextEditingController();
   TextEditingController titleController = TextEditingController();
@@ -43,58 +46,61 @@ class _UpdateProductState extends State<UpdateProduct> {
         title: const Text('Edit Product'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            InputBox(
-              label: 'ID',
-              controller: idController,
-              isRequired: true,
-              isNumber: true,
-              isDisabled: true,
-            ),
-            InputBox(
-              label: 'Title',
-              controller: titleController,
-            ),
-            InputBox(
-              label: 'Price',
-              controller: priceController,
-              isNumber: true,
-            ),
-            InputBox(
-              label: 'Description',
-              controller: descriptionController,
-            ),
-            InputBox(
-              label: 'Image',
-              controller: imageController,
-            ),
-            InputBox(
-              label: 'Category',
-              controller: categoryController,
-              isRequired: true,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await onUpdate(0);
-              },
-              child: const Text('Update With Patch Request'),
-            ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InputBox(
+                label: 'ID',
+                controller: idController,
+                isRequired: true,
+                isNumber: true,
+                isDisabled: true,
+              ),
+              InputBox(
+                label: 'Title',
+                controller: titleController,
+              ),
+              InputBox(
+                label: 'Price',
+                controller: priceController,
+                isNumber: true,
+              ),
+              InputBox(
+                label: 'Description',
+                controller: descriptionController,
+              ),
+              InputBox(
+                label: 'Image',
+                controller: imageController,
+              ),
+              InputBox(
+                label: 'Category',
+                controller: categoryController,
+                isRequired: true,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  await onUpdate(0);
+                },
+                child: const Text('Update With Patch Request'),
+              ),
 
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await onUpdate(1);
-              },
-              child: const Text('Update With Put Request'),
-            ),
-          ],
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  await onUpdate(1);
+                },
+                child: const Text('Update With Put Request'),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -112,47 +118,44 @@ class _UpdateProductState extends State<UpdateProduct> {
   }
 
   Future<void> onUpdate(int requestType) async {
-    if (idController.text.isEmpty || categoryController.text.isEmpty) {
-      await Helper.toast('Category Required');
-      return;
-    }
-
-    // Map removed and then used Product model
-    ProductModel productModel = ProductModel(
-      id: int.parse(idController.text),
-      title: idController.text.trim(),
-      price: double.parse(priceController.text.trim()),
-      description: descriptionController.text.trim(),
-      category: categoryController.text.trim(),
-      image: imageController.text.trim(),
-      rating: product.rating,
-    );
-    ResponseDTO responseDTO;
-
-    if (requestType == 1) {
-      responseDTO = await service.updateProductWithPatch(productModel);
-    } else {
-      responseDTO = await service.updateProductWithPut(productModel);
-    }
-
-    if (responseDTO.responseData.toString().isNotEmpty) {
-      // debugPrint(responseDTO.responseData.toString());
-      // Map<String, dynamic> decodedMap =
-      //     jsonDecode(responseDTO.responseData.toString())
-      //         as Map<String, dynamic>;
-
-      await Helper.snackBar(
-        context,
-        '${requestType == 0 ? 'Updated Product With Patch Request' : 'Updated Product With Put Request'} Successful',
+    if (_formKey.currentState!.validate()) {
+      // Map removed and then used Product model
+      ProductModel productModel = ProductModel(
+        id: int.parse(idController.text),
+        title: idController.text.trim(),
+        price: double.parse(priceController.text.trim()),
+        description: descriptionController.text.trim(),
+        category: categoryController.text.trim(),
+        image: imageController.text.trim(),
+        rating: product.rating,
       );
-      Navigator.pop(context);
-      return;
-    } else {
-      await Helper.snackBar(
-        context,
-        'Error : ${responseDTO.error} '
-        '${requestType == 0 ? 'Product Not Updated With Patch Request' : 'Product Not Updated With Put Request'} Successful',
-      );
+      ResponseDTO responseDTO;
+
+      if (requestType == 1) {
+        responseDTO = await service.updateProductWithPatch(productModel);
+      } else {
+        responseDTO = await service.updateProductWithPut(productModel);
+      }
+
+      if (responseDTO.responseData.toString().isNotEmpty) {
+        // debugPrint(responseDTO.responseData.toString());
+        // Map<String, dynamic> decodedMap =
+        //     jsonDecode(responseDTO.responseData.toString())
+        //         as Map<String, dynamic>;
+
+        await Helper.snackBar(
+          context,
+          '${requestType == 0 ? 'Updated Product With Patch Request' : 'Updated Product With Put Request'} Successful',
+        );
+        Navigator.pop(context);
+        return;
+      } else {
+        await Helper.snackBar(
+          context,
+          'Error : ${responseDTO.error} '
+          '${requestType == 0 ? 'Product Not Updated With Patch Request' : 'Product Not Updated With Put Request'} Successful',
+        );
+      }
     }
   }
 }

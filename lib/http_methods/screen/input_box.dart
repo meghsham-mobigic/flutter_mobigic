@@ -28,6 +28,13 @@ class InputBox extends StatelessWidget {
           controller: controller,
           enabled: !isDisabled,
           keyboardType: isNumber ? TextInputType.number : TextInputType.text,
+          validator: (valueString) {
+            if (isRequired &&
+                (valueString == null || valueString.trim().isEmpty)) {
+              return 'Should Not be Empty';
+            }
+            return null;
+          },
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
             label: Text(displayLabel),
